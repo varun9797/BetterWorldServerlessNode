@@ -1,5 +1,5 @@
 if [ "$#" -ne 2 ]; then
-  echo "Usage : ./run.sh lambdaName";
+  echo "Usage : ./run.sh envName regionName";
   exit 1;
 fi
 
@@ -64,12 +64,6 @@ else
   echo "Got Error"
   exit 1;
 fi
-
-# echo "removing old zip"
-# rm .serverless/archive.zip;
-
-# echo "creating a new zip file"
-# zip archive.zip *  -r -x .git/\* \*.sh tests/\* node_modules/aws-sdk/\* \*.zip
 
 echo "deploying on environment- $env and region- $region";
 
