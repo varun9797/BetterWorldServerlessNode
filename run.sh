@@ -52,6 +52,9 @@ else
 fi
 
 #Git Commands
+read -p "Do you want to commit changes (Y/N)? " answer;
+if [ "$answer" != "${answer#[Yy]}" ] ;then
+echo Yes
 read -p "Please provide git commit message- " commitMsg;
 git add .;
 git commit -m "$commitMsg";
@@ -64,6 +67,8 @@ else
   echo "Got Error"
   exit 1;
 fi
+fi
+
 
 echo "deploying on environment- $env and region- $region";
 
