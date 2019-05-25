@@ -22,9 +22,9 @@ regionArray=("us-east-1" "us-east-2")
 if [[  " ${envAarry[@]} " =~ " $env " ]] && [[  " ${regionArray[@]} " =~ " $region " ]]; then
     echo "Deploying lambda on $env env and region $region"
     echo "********************************************************";
-    echo "**If this is not correct please cancel before 20 Second**";
+    echo "**If this is not correct please cancel before 5 Second**";
     echo "********************************************************";
-    sleep 20
+    sleep 5
     else
     echo "please check the arguments";
     echo "env = $env. Available environment are 'Dev' 'stage' or 'prod'";
@@ -52,11 +52,11 @@ else
 fi
 
 #Git Commands
-read -p "Please provide git commit message" commitMsg;
+read -p "Please provide git commit message- " commitMsg;
 git add .;
 git commit -m "$commitMsg";
 echo "commit done!!!";
-read -p "Please provide branch name" branchName;
+read -p "Please provide branch name- " branchName;
 git push origin "$branchName";
 if [ $? -eq 0 ]; then
   echo "!! Changes successfully pushed to branch $branchName !!"
@@ -71,15 +71,13 @@ fi
 # echo "creating a new zip file"
 # zip archive.zip *  -r -x .git/\* \*.sh tests/\* node_modules/aws-sdk/\* \*.zip
 
-echo "Uploading on environment $env to $region";
+echo "deploying on environment- $env and region- $region";
 
-#sls deploy --stage $env --region $region
+sls deploy --stage $env --region $region
 
 if [ $? -eq 0 ]; then
   echo "!! Upload successful !!"
 else 
   echo "Upload failed"
-  echo "If the error was a 400, check that there are no slashes in your env name"
-  echo "env name = $env"
   exit 1;
 fi
