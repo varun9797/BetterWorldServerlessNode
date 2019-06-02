@@ -13,7 +13,7 @@ class SocietyRecieptModel {
                   let result = await queryMediator.queryConnection(query);
                 return result;
             } else if(httpMethod == 'PUT' && body.paymentStructureId){
-                let query = `call update_payment_structure( ${body.societyId}, ${body.flatType},${body.createdBy},${body.buildingMaintenance}, ${body.parkingMaintenance}, ${body.municipalDue},
+                let query = `call update_payment_structure(${body.paymentStructureId}, ${body.societyId}, ${body.flatType},${body.createdBy},${body.buildingMaintenance}, ${body.parkingMaintenance}, ${body.municipalDue},
                     ${body.sinkingFund}, ${body.electricityCharge})`
                   let result = await queryMediator.queryConnection(query);
                 return result;
