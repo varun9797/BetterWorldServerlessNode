@@ -25,6 +25,7 @@ class SocietyRecieptController {
             console.log("SocietyRecieptController :: createReciept :: result",result)
         } catch(err) {
             console.log("SocietyRecieptController :: createReciept :: Error", err);
+            throw Error(err);
         }
        
     }

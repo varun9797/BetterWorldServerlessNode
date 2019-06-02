@@ -12,7 +12,8 @@ class SocietyRecieptModel {
               let result = await queryMediator.queryConnection(query);
             return result;
         } catch(err) {
-            console.log("SocietyRecieptModel:: createPaymentStructure Error : ",err)
+            console.log("SocietyRecieptModel:: createPaymentStructure Error : ",err);
+            throw Error(err);
         }
     }
 

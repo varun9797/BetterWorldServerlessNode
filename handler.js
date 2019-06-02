@@ -5,7 +5,7 @@ export async function societyReciept(event) {
   try {
     let data = JSON.parse(event.body);
     console.log("post event is ", data);
-    await societyRecieptController.createReciept(event.body);
+    await societyRecieptController.createReciept(data);
     return {
       statusCode: 200,
       body: JSON.stringify({
