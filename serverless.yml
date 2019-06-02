@@ -70,12 +70,18 @@ custom:
 #    - exclude-me-dir/**
 
 functions:
-  societyReciept:
+  societyRecieptPost:
     handler: handler.societyReciept
     events:
      - http:
          path: /societyReciept
          method: POST
+  societyRecieptPut:
+    handler: handler.societyReciept
+    events:
+     - http:
+         path: /societyReciept
+         method: PUT
   check:
     handler: handler.check
     events:

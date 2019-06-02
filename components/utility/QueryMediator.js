@@ -21,7 +21,6 @@ class QueryMediator {
                     reject(appData);
                 } else {
                     connection.query(query, [value], function (err, rows) {
-                        //console.log(temp.sql);
                         connection.release();
                         if (!err) {
                             appData.error = 0;
@@ -29,14 +28,12 @@ class QueryMediator {
                             appData['satusCode'] = 201;
                             appData['dbResponse'] = rows;                            
                             resolve(appData);
-                            //res.status(201).json(appData);
                         } else {
                             appData.error = err;
                             appData['data'] = 'Error Occured!';
                             appData['satusCode'] = 400;
                             appData['dbResponse'] = '';
                             reject(appData);
-                            //res.status(400).json(err);
                         }
                     });
                 }

@@ -4,8 +4,9 @@ import societyRecieptController from "./components/society-reciept/controller/So
 export async function societyReciept(event) {
   try {
     let data = JSON.parse(event.body);
+    let httpMethod = event.httpMethod;
     console.log("post event is ", data);
-    await societyRecieptController.createReciept(data);
+    await societyRecieptController.createOrUpdateReciept(data, httpMethod);
     return {
       statusCode: 200,
       body: JSON.stringify({

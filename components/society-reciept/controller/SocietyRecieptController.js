@@ -13,18 +13,18 @@ class SocietyRecieptController {
         console.log("inside SocietyRecieptController");
          
     }
-    createReciept = async (body) => {
+    createOrUpdateReciept = async (body, httpMethod) => {
         try {
-            console.log("SocietyRecieptController :: createReciept");
+            console.log("SocietyRecieptController :: createOrUpdateReciept");
             let promiseArr = [];
             body.flatTypeArr.forEach((flatType)=>{
                 body.flatType = flatType;
-                promiseArr.push(societyRecieptModel.createPaymentStructure(body))
+                promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
             })
             let result = await Promise.all(promiseArr);
-            console.log("SocietyRecieptController :: createReciept :: result",result)
+            console.log("SocietyRecieptController :: createOrUpdateReciept :: result",result)
         } catch(err) {
-            console.log("SocietyRecieptController :: createReciept :: Error", err);
+            console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
             throw Error(err);
         }
        
