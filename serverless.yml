@@ -20,6 +20,13 @@ service: lambda-node # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs8.10
+  enableAPIGLogs: true
+  environment:
+    MYSQLHOST: 'final-betterworld0ccb3fb2-2f45-447f-a872-08f7b2396f81.cqdt99obscjn.us-east-1.rds.amazonaws.com'
+    MYSQLPORT: '3306'
+    MYSQLUSER: 'verma9797'
+    MYSQLPASS: 'qwer#123'
+    MYSQLDATABASE: 'dev_society'
 
 # you can overwrite defaults here
 #  stage: dev
@@ -45,6 +52,14 @@ provider:
 #  environment:
 #    variable1: value1
 
+package:
+  individually: true
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
 # you can add packaging information here
 #package:
 #  include:
@@ -55,18 +70,23 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  societyReciept:
+    handler: handler.societyReciept
     events:
      - http:
-         path: /
-         method: get
+         path: /societyReciept
+         method: POST
   check:
     handler: handler.check
     events:
      - http:
          path: /test
          method: get
+
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

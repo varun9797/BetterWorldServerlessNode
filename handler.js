@@ -1,17 +1,36 @@
 'use strict';
+import societyRecieptController from "./components/society-reciept/controller/SocietyRecieptController";
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }, null, 2)
+export async function societyReciept(event) {
+  try {
+    let data = JSON.parse(event.body);
+    console.log("post event is ", data);
+    await societyRecieptController.createReciept(event.body);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: 'Go Serverless v1.0! Your function executed successfully!',
+        input: data,
+      }, null, 2)
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: 'Something Went Wrong.',
+        error: err,
+        input: data,
+      }, null, 2)
+    };
+  }
 
-  };
-};
+}
 
-module.exports.check = async (event) => {
+// export default {
+//   societyReciept
+// }
+
+export async function check(event) {
   return {
     statusCode: 200,
     body: JSON.stringify({
@@ -19,5 +38,5 @@ module.exports.check = async (event) => {
       input: event,
     }, null, 2)
   };
-};
+}
 
