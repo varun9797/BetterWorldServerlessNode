@@ -71,23 +71,23 @@ custom:
 
 functions:
   societyRecieptPost:
-    handler: handler.societyReciept
+    handler: handler.putOrPostSocietyReciept
     events:
      - http:
          path: /societyReciept
          method: POST
   societyRecieptPut:
-    handler: handler.societyReciept
+    handler: handler.putOrPostSocietyReciept
     events:
      - http:
          path: /societyReciept
          method: PUT
-  check:
-    handler: handler.check
+  societyRecieptGet:
+    handler: handler.getSocietyReciept
     events:
      - http:
-         path: /test
-         method: get
+         path: /societyReciept
+         method: GET
 
 
 plugins:

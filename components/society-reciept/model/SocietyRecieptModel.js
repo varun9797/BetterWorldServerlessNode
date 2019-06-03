@@ -18,14 +18,25 @@ class SocietyRecieptModel {
                   let result = await queryMediator.queryConnection(query);
                 return result;
             } else {
-                throw Error("Invalid Request");
+                throw new Error("Invalid Request");
             }
         } catch(err) {
             console.log("SocietyRecieptModel:: createOrUpdatePaymentStructure Error : ",err);
-            throw Error(err);
+            throw new Error(err);
         }
     }
 
+    getPaymentStructure = async (body)=>{
+        try {
+            console.log("SocietyRecieptModel:: getPaymentStructure : ");
+            let query = `call get_payment_structure(${body.paymentStructureId})`;
+            let result = await queryMediator.queryConnection(query);
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: getPaymentStructure Error : ",err);
+            throw new Error(err);
+        }
+    }
 
 }
 

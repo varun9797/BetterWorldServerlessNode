@@ -24,7 +24,7 @@ if [[  " ${envAarry[@]} " =~ " $env " ]] && [[  " ${regionArray[@]} " =~ " $regi
     echo "********************************************************";
     echo "**If this is not correct please cancel before 5 Second**";
     echo "********************************************************";
-    sleep 5
+    sleep 0
     else
     echo "please check the arguments";
     echo "env = $env. Available environment are 'Dev' 'stage' or 'prod'";
