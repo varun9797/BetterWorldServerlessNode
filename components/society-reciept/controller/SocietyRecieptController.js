@@ -32,6 +32,16 @@ class SocietyRecieptController {
             throw new Error(err);
         } 
     }
+    updatePendingPayment = async (body) => {
+        try {
+            console.log("SocietyRecieptController :: updatePendingPayment");
+            let result = await societyRecieptModel.updatePendingPayment(body);
+            return result.dbResponse[0];
+        } catch(err) {
+            console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
+            throw new Error(err);
+        } 
+    }
 }
 
 export default new SocietyRecieptController();

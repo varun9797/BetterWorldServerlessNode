@@ -88,6 +88,12 @@ functions:
      - http:
          path: /societyReciept
          method: GET
+  updatePendingPayment:
+    handler: handler.updatePendingPayment
+    events:
+     - http:
+         path: /pendingPayment
+         method: PUT
 
 
 plugins:

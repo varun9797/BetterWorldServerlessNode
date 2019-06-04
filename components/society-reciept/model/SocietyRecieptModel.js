@@ -38,6 +38,18 @@ class SocietyRecieptModel {
         }
     }
 
+    updatePendingPayment = async (body)=>{
+        try {
+            console.log("SocietyRecieptModel:: updatePendingPayment : ");
+            let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
+            let result = await queryMediator.queryConnection(query);
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",err);
+            throw new Error(err);
+        }
+    }
+
 }
 
 export default new SocietyRecieptModel();
