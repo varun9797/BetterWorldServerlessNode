@@ -19,4 +19,4 @@ class SocietyController {
     } 
 }
 
-export default new SocietyRecieptController();
+export default new SocietyController();
