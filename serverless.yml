@@ -100,7 +100,12 @@ functions:
      - http:
          path: /paymentHistory
          method: GET
-
+  registerOwner:
+    handler: handler.registerOwner
+    events:
+     - http:
+         path: /registerOwner
+         method: POST
 
 plugins:
   - serverless-webpack
