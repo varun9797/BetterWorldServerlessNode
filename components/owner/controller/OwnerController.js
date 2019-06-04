@@ -1,19 +1,19 @@
 import ownerModel from "./../model/OwnerModel"
 
 
-class SocietyRecieptController {
+class SocietyController {
     constructor(){
-        console.log("inside SocietyRecieptController");
+        console.log("inside SocietyController");
          
     }
 
     registerOwner = async (body) => {
         try {
-            console.log("SocietyRecieptController :: registerOwner");
+            console.log("SocietyController :: registerOwner");
             let result = await ownerModel.registerOwner(body);
             return result;
         } catch(err) {
-            console.log("SocietyRecieptController :: registerOwner :: Error", err);
+            console.log("SocietyController :: registerOwner :: Error", err);
             throw new Error(err);
         } 
     } 
