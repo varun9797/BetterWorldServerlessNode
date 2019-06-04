@@ -94,6 +94,12 @@ functions:
      - http:
          path: /pendingPayment
          method: PUT
+  getPaymentHistory:
+    handler: handler.getPaymentHistory
+    events:
+     - http:
+         path: /paymentHistory
+         method: GET
 
 
 plugins:

@@ -31,7 +31,7 @@ class SocietyRecieptModel {
             console.log("SocietyRecieptModel:: getPaymentStructure : ");
             let query = `call get_payment_structure(${body.paymentStructureId})`;
             let result = await queryMediator.queryConnection(query);
-            return result;
+            return result.dbResponse[0];
         } catch(err) {
             console.log("SocietyRecieptModel:: getPaymentStructure Error : ",err);
             throw new Error(err);
@@ -43,7 +43,19 @@ class SocietyRecieptModel {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");
             let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
             let result = await queryMediator.queryConnection(query);
-            return result;
+            return result.dbResponse[0];
+        } catch(err) {
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",err);
+            throw new Error(err);
+        }
+    }
+
+    getPaymentHistory = async (body)=>{
+        try {
+            console.log("SocietyRecieptModel:: updatePendingPayment : ");
+            let query = `select flatid, amount, createddate, updateddate, ownerid, remainingbalance, updatedby, comment from paymenthistory where flatid = ${body.flatId}`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
         } catch(err) {
             console.log("SocietyRecieptModel:: updatePendingPayment Error : ",err);
             throw new Error(err);

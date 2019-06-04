@@ -38,4 +38,16 @@ export async function updatePendingPayment(event) {
   }
 }
 
+export async function getPaymentHistory(event) {
+  try {
+    //console.log("handler :: getPaymentHistory ", event.queryStringParameters);
+    let data = {flatId:1};
+    let result = await societyRecieptController.getPaymentHistory(data);
+    return responseFormat.getResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result);
+  } catch (err) {
+    console.error("handler :: getPaymentHistory :: Error ", err);
+    return responseFormat.getResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
+  }
+}
+
 

@@ -26,7 +26,7 @@ class SocietyRecieptController {
         try {
             console.log("SocietyRecieptController :: createOrUpdateReciept");
             let result = await societyRecieptModel.getPaymentStructure(body);
-            return result.dbResponse[0];
+            return result;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
             throw new Error(err);
@@ -36,12 +36,22 @@ class SocietyRecieptController {
         try {
             console.log("SocietyRecieptController :: updatePendingPayment");
             let result = await societyRecieptModel.updatePendingPayment(body);
-            return result.dbResponse[0];
+            return result;
         } catch(err) {
             console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
             throw new Error(err);
         } 
-    }
+    } 
+    getPaymentHistory = async (body) => {
+        try {
+            console.log("SocietyRecieptController :: updatePendingPayment");
+            let result = await societyRecieptModel.getPaymentHistory(body);
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
+            throw new Error(err);
+        } 
+    } 
 }
 
 export default new SocietyRecieptController();
