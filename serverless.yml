@@ -27,6 +27,7 @@ provider:
     MYSQLUSER: 'verma9797'
     MYSQLPASS: 'qwer#123'
     MYSQLDATABASE: 'dev_society'
+    SECRET_KEY: 'TempSecretKey'
 
 # you can overwrite defaults here
 #  stage: dev
@@ -106,7 +107,12 @@ functions:
      - http:
          path: /registerOwner
          method: POST
-
+  loginUser:
+    handler: handler.loginUser
+    events:
+     - http:
+         path: /loginUser
+         method: GET
 plugins:
   - serverless-webpack
   - serverless-offline

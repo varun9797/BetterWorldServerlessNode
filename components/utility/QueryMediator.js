@@ -7,7 +7,7 @@ class QueryMediator {
             'error': 1,
             'data': '',
             'satusCode': '',
-            'dbResponse': ''
+            'dbResponse': []
         };
         console.log(query , 'values =', value);
         return new Promise((resolve, reject) => {
@@ -17,7 +17,6 @@ class QueryMediator {
                     appData.error = err;
                     appData['data'] = 'Error Occured!';
                     appData['satusCode'] = 500;
-                    appData['dbResponse'] = '';
                     reject(appData);
                 } else {
                     connection.query(query, [value], function (err, rows) {
@@ -32,7 +31,6 @@ class QueryMediator {
                             appData.error = err;
                             appData['data'] = 'Error Occured!';
                             appData['satusCode'] = 400;
-                            appData['dbResponse'] = '';
                             reject(appData);
                         }
                     });

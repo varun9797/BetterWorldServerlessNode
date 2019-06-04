@@ -1,6 +1,7 @@
 'use strict';
 import societyRecieptController from "./components/society-reciept/controller/SocietyRecieptController";
 import ownerController from "./components/owner/controller/OwnerController";
+import authenticationController from "./components/authentication/controller/AuthenticationController";
 import responseFormat from "./lib/response-format"
 
 export async function putOrPostSocietyReciept(event) {
@@ -55,9 +56,23 @@ export async function getPaymentHistory(event) {
       let result = await ownerController.registerOwner(data);
       return responseFormat.getResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result);
     } catch (err) {
-      console.error("handler :: getPaymentHistory :: Error ", err);
+      console.error("handler :: registerOwner :: Error ", err);
       return responseFormat.getResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
     }
+}
+export async function loginUser(event) {
+  try {
+    //let data = JSON.parse(event.body);
+    let data = {
+      email:"sdfsfd24234",
+      password:"122345"
+    }
+    let result = await authenticationController.loginUser(data);
+    return responseFormat.getResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result);
+  } catch (err) {
+    console.error("handler :: loginUser :: Error ", err);
+    return responseFormat.getResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
+  }
 }
 
 
