@@ -72,47 +72,47 @@ custom:
 
 functions:
   societyRecieptPost:
-    handler: handler.putOrPostSocietyReciept
+    handler: handler/payment-and-reciept-handler.putOrPostSocietyReciept
     events:
      - http:
          path: /societyReciept
          method: POST
   societyRecieptPut:
-    handler: handler.putOrPostSocietyReciept
+    handler: handler/payment-and-reciept-handler.putOrPostSocietyReciept
     events:
      - http:
          path: /societyReciept
          method: PUT
   societyRecieptGet:
-    handler: handler.getSocietyReciept
+    handler: handler/payment-and-reciept-handler.getSocietyReciept
     events:
      - http:
          path: /societyReciept
          method: GET
   updatePendingPayment:
-    handler: handler.updatePendingPayment
+    handler: handler/payment-and-reciept-handler.updatePendingPayment
     events:
      - http:
          path: /pendingPayment
          method: PUT
   getPaymentHistory:
-    handler: handler.getPaymentHistory
+    handler: handler/payment-and-reciept-handler.getPaymentHistory
     events:
      - http:
          path: /paymentHistory
          method: GET
   registerOwner:
-    handler: handler.registerOwner
+    handler: handler/owner-handler.registerOwner
     events:
      - http:
          path: /registerOwner
          method: POST
   loginUser:
-    handler: handler.loginUser
+    handler: handler/login-handler.loginUser
     events:
      - http:
          path: /loginUser
-         method: GET
+         method: POST
 plugins:
   - serverless-webpack
   - serverless-offline
@@ -151,12 +151,12 @@ plugins:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
+# resources:
 #  Resources:
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
-#        BucketName: my-new-bucket
+#        BucketName: lambda-node-dev-serverlessdeploymentbucket-17ks35mmrtt63
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"

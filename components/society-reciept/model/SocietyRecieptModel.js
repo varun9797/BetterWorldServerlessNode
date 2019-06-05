@@ -21,7 +21,7 @@ class SocietyRecieptModel {
                 throw new Error("Invalid Request");
             }
         } catch(err) {
-            console.log("SocietyRecieptModel:: createOrUpdatePaymentStructure Error : ",err);
+            console.log("SocietyRecieptModel:: createOrUpdatePaymentStructure Error : ",JSON.stringify(err));
             throw new Error(err);
         }
     }
@@ -33,7 +33,7 @@ class SocietyRecieptModel {
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse[0];
         } catch(err) {
-            console.log("SocietyRecieptModel:: getPaymentStructure Error : ",err);
+            console.log("SocietyRecieptModel:: getPaymentStructure Error : ",JSON.stringify(err));
             throw new Error(err);
         }
     }
@@ -45,7 +45,7 @@ class SocietyRecieptModel {
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse[0];
         } catch(err) {
-            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",err);
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",JSON.stringify(err));
             throw new Error(err);
         }
     }
@@ -57,7 +57,7 @@ class SocietyRecieptModel {
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
         } catch(err) {
-            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",err);
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",JSON.stringify(err));
             throw new Error(err);
         }
     }
