@@ -26,15 +26,15 @@ export async function getSocietyReciept(event) {
   }
 }
 
-export async function updatePendingPayment(event, context, callback) {
+export async function updatePendingPayment(event) {
   try {
     let data = JSON.parse(event.body);
     console.log("updatePendingPayment ", data);
     let result = await societyRecieptController.updatePendingPayment(data);
-    callback(null, responseFormat.getResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
+    return responseFormat.getResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result);
   } catch (err) {
     console.error("updatePendingPayment :: Error ", err);
-    callback(null,  responseFormat.getResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+    return  responseFormat.getResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
   }
 }
 
