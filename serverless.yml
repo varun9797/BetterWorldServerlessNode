@@ -95,6 +95,7 @@ functions:
      - http:
          path: /pendingPayment
          method: PUT
+         cors: true
   getPaymentHistory:
     handler: handler/payment-and-reciept-handler.getPaymentHistory
     events:
