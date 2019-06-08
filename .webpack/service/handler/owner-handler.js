@@ -107,7 +107,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-class SocietyController {
+class OwnerController {
   constructor() {
     _defineProperty(this, "registerOwner", async body => {
       try {
@@ -126,7 +126,7 @@ class SocietyController {
 
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (new SocietyController());
+/* harmony default export */ __webpack_exports__["default"] = (new OwnerController());
 
 /***/ }),
 
@@ -148,7 +148,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-class SocietyModel {
+class OwnerModel {
   constructor() {
     _defineProperty(this, "registerOwner", async body => {
       try {
@@ -167,7 +167,7 @@ class SocietyModel {
 
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (new SocietyModel());
+/* harmony default export */ __webpack_exports__["default"] = (new OwnerModel());
 
 /***/ }),
 

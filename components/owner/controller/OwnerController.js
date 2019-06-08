@@ -1,7 +1,7 @@
 import ownerModel from "./../model/OwnerModel"
 import bcrypt from '../../../lib/bcrypt'
 
-class SocietyController {
+class OwnerController {
     constructor(){
         console.log("inside SocietyController");
          
@@ -20,4 +20,4 @@ class SocietyController {
     } 
 }
 
-export default new SocietyController();
+export default new OwnerController();

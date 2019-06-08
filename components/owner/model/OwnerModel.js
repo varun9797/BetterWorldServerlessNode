@@ -1,7 +1,7 @@
 import queryMediator from '../../utility/QueryMediator';
 
 
-class SocietyModel {
+class OwnerModel {
     constructor(){
         console.log("inside SocietyModel");
          
@@ -20,4 +20,4 @@ class SocietyModel {
     } 
 }
 
-export default new SocietyModel();
+export default new OwnerModel();
