@@ -21,13 +21,15 @@ provider:
   name: aws
   runtime: nodejs8.10
   enableAPIGLogs: true
+  stage: ${opt:stage,'dev'}
+
   environment:
-    MYSQLHOST: 'final-betterworld0ccb3fb2-2f45-447f-a872-08f7b2396f81.cqdt99obscjn.us-east-1.rds.amazonaws.com'
-    MYSQLPORT: '3306'
-    MYSQLUSER: 'verma9797'
-    MYSQLPASS: 'qwer#123'
-    MYSQLDATABASE: 'dev_society'
-    SECRET_KEY: 'TempSecretKey'
+    MYSQLHOST: ${self:custom.mysqlHost.${self:provider.stage}}
+    MYSQLPORT: ${self:custom.mysqlPort.${self:provider.stage}}
+    MYSQLUSER: ${self:custom.mysqlUser.${self:provider.stage}}
+    MYSQLPASS: ${self:custom.mysqlPassword.${self:provider.stage}}
+    MYSQLDATABASE: ${self:custom.mysqlDatabase.${self:provider.stage}}
+    SECRET_KEY: ${ssm:secretKey}
 
 # you can overwrite defaults here
 #  stage: dev
@@ -57,6 +59,30 @@ package:
   individually: true
 
 custom:
+  stages:
+    - dev
+    - staging
+    - prod
+  mysqlHost:
+    dev: ${ssm:mySqlHost}
+    staging: "sdasda" #get from ssm
+    prod: ${ssm:/myapp/prod/mysql-host} #get from ssm
+  mysqlUser:
+    dev: ${ssm:mySqlUser}
+    staging: myapp_stag
+    prod: myapp
+  mysqlPassword:
+    dev: ${ssm:mySqlPassword} #get from ssm (secure)
+    staging: "sdfsdfsdf" #get from ssm (secure)
+    prod: ${ssm:/myapp/prod/mysql-password~true} #get from ssm (secure)
+  mysqlDatabase:
+    dev: 'dev_society'
+    staging: myapp_staging
+    prod: myapp_prod
+  mysqlPort:
+    dev: '3306'
+    staging: '3306'
+    prod: '3306'
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -85,7 +111,7 @@ functions:
         method: any
         path: owner/{proxy+}
         cors: true
-  loginUser:
+  authUser:
     handler: handler/auth-handler.authHandler
     events:
     - http:
