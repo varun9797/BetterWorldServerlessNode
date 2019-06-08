@@ -82,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./handler/login-handler.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./handler/auth-handler.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -185,6 +185,43 @@ class AuthenticationModel {
 
 /***/ }),
 
+/***/ "./components/authentication/router/authentication-router.js":
+/*!*******************************************************************!*\
+  !*** ./components/authentication/router/authentication-router.js ***!
+  \*******************************************************************/
+/*! exports provided: loginUser, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginUser", function() { return loginUser; });
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _controller_AuthenticationController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controller/AuthenticationController */ "./components/authentication/controller/AuthenticationController.js");
+/* harmony import */ var _lib_response_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/response-format */ "./lib/response-format.js");
+
+
+var router = express__WEBPACK_IMPORTED_MODULE_1___default.a.Router();
+router.post("/loginUser", loginUser);
+
+
+async function loginUser(req, res) {
+  try {
+    let data = req.body;
+    console.log("registerOwner ", data);
+    let result = await _controller_AuthenticationController__WEBPACK_IMPORTED_MODULE_2__["default"].loginUser(data);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("handler :: loginUser :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
 /***/ "./components/utility/QueryMediator.js":
 /*!*********************************************!*\
   !*** ./components/utility/QueryMediator.js ***!
@@ -282,33 +319,44 @@ var connection = mysql.createPool({
 
 /***/ }),
 
-/***/ "./handler/login-handler.js":
-/*!**********************************!*\
-  !*** ./handler/login-handler.js ***!
-  \**********************************/
-/*! exports provided: loginUser */
+/***/ "./handler/auth-handler.js":
+/*!*********************************!*\
+  !*** ./handler/auth-handler.js ***!
+  \*********************************/
+/*! exports provided: authHandler */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginUser", function() { return loginUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authHandler", function() { return authHandler; });
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_authentication_controller_AuthenticationController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/authentication/controller/AuthenticationController */ "./components/authentication/controller/AuthenticationController.js");
-/* harmony import */ var _lib_response_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/response-format */ "./lib/response-format.js");
+/* harmony import */ var _components_authentication_router_authentication_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/authentication/router/authentication-router */ "./components/authentication/router/authentication-router.js");
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! serverless-http */ "serverless-http");
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(serverless_http__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! body-parser */ "body-parser");
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(body_parser__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
-async function loginUser(event) {
-  try {
-    let data = JSON.parse(event.body);
-    console.log("registerOwner ", data);
-    let result = await _components_authentication_controller_AuthenticationController__WEBPACK_IMPORTED_MODULE_1__["default"].loginUser(data);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["SUCCESS"], "function executed successfully!", result);
-  } catch (err) {
-    console.error("handler :: loginUser :: Error ", err);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
-  }
+
+
+ // or any supported framework
+
+
+const app = express__WEBPACK_IMPORTED_MODULE_3___default()();
+app.use(body_parser__WEBPACK_IMPORTED_MODULE_4___default.a.urlencoded({
+  extended: false
+}));
+app.use(body_parser__WEBPACK_IMPORTED_MODULE_4___default.a.json());
+app.use("/auth", _components_authentication_router_authentication_router__WEBPACK_IMPORTED_MODULE_1__["default"]); //app.use("/public", ownerRouter);
+
+async function authHandler(event, context) {
+  const handler = serverless_http__WEBPACK_IMPORTED_MODULE_2___default()(app);
+  const result = handler(event, context);
+  return result;
 }
 
 /***/ }),
@@ -452,7 +500,7 @@ class ResponseFormat {
     };
   }
 
-  getResponseObject(type, code, message, data) {
+  getLambdaResponseObject(type, code, message, data) {
     let resObject = {
       statusCode: code,
       body: JSON.stringify({
@@ -465,6 +513,18 @@ class ResponseFormat {
         'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
         'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/json'
+      }
+    };
+    return resObject;
+  }
+
+  getExpressResponseObject(type, code, message, data) {
+    let resObject = {
+      statusCode: code,
+      body: {
+        message: message,
+        data: data,
+        type: type
       }
     };
     return resObject;
@@ -484,6 +544,28 @@ class ResponseFormat {
 /***/ (function(module, exports) {
 
 module.exports = require("bcrypt");
+
+/***/ }),
+
+/***/ "body-parser":
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("body-parser");
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
 
 /***/ }),
 
@@ -509,6 +591,17 @@ module.exports = require("mysql");
 
 /***/ }),
 
+/***/ "serverless-http":
+/*!**********************************!*\
+  !*** external "serverless-http" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("serverless-http");
+
+/***/ }),
+
 /***/ "source-map-support/register":
 /*!**********************************************!*\
   !*** external "source-map-support/register" ***!
@@ -521,4 +614,4 @@ module.exports = require("source-map-support/register");
 /***/ })
 
 /******/ });
-//# sourceMappingURL=login-handler.js.map
+//# sourceMappingURL=auth-handler.js.map

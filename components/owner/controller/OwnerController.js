@@ -3,7 +3,7 @@ import bcrypt from '../../../lib/bcrypt'
 
 class OwnerController {
     constructor(){
-        console.log("inside SocietyController");
+        console.log("inside OwnerController");
          
     }
 

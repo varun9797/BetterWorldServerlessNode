@@ -253,6 +253,133 @@ class SocietyRecieptModel {
 
 /***/ }),
 
+/***/ "./components/society-reciept/router/public-society-reciept-router.js":
+/*!****************************************************************************!*\
+  !*** ./components/society-reciept/router/public-society-reciept-router.js ***!
+  \****************************************************************************/
+/*! exports provided: getPaymentHistory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPaymentHistory", function() { return getPaymentHistory; });
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controller/SocietyRecieptController */ "./components/society-reciept/controller/SocietyRecieptController.js");
+/* harmony import */ var _lib_response_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/response-format */ "./lib/response-format.js");
+
+
+var router = express__WEBPACK_IMPORTED_MODULE_1___default.a.Router();
+
+
+router.get("/societyReciept", getSocietyReciept);
+router.get("/paymentHistory", getPaymentHistory);
+
+async function getSocietyReciept(req, res) {
+  try {
+    console.log("getSocietyReciept ", req.query);
+    let result = await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].getPaymentStructure(req.query);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("getSocietyReciept :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+
+async function getPaymentHistory(req, res) {
+  try {
+    console.log("getPaymentHistory ", req.query);
+    let result = await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].getPaymentHistory(req.query);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("getPaymentHistory :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./components/society-reciept/router/society-reciept-router.js":
+/*!*********************************************************************!*\
+  !*** ./components/society-reciept/router/society-reciept-router.js ***!
+  \*********************************************************************/
+/*! exports provided: putOrPostSocietyReciept, updatePendingPayment, getPaymentHistory, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putOrPostSocietyReciept", function() { return putOrPostSocietyReciept; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePendingPayment", function() { return updatePendingPayment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPaymentHistory", function() { return getPaymentHistory; });
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+/* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../controller/SocietyRecieptController */ "./components/society-reciept/controller/SocietyRecieptController.js");
+/* harmony import */ var _lib_response_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../lib/response-format */ "./lib/response-format.js");
+
+
+var router = express__WEBPACK_IMPORTED_MODULE_1___default.a.Router();
+
+
+router.get("/societyReciept", getSocietyReciept);
+router.post("/societyReciept", putOrPostSocietyReciept);
+router.put("/societyReciept", putOrPostSocietyReciept);
+router.post("/pendingPayment", updatePendingPayment);
+router.get("/paymentHistory", getPaymentHistory);
+
+async function getSocietyReciept(req, res) {
+  try {
+    console.log("getSocietyReciept ", req.query);
+    let result = await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].getPaymentStructure(req.query);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("getSocietyReciept :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+
+async function putOrPostSocietyReciept(req, res) {
+  try {
+    let data = req.body;
+    let httpMethod = req.method;
+    console.log("request method is ", httpMethod);
+    console.log("putOrPostSocietyReciept ", data);
+    await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].createOrUpdateReciept(data, httpMethod);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", null));
+  } catch (err) {
+    console.error("putOrPostSocietyReciept :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+async function updatePendingPayment(req, res) {
+  try {
+    let data = req.body;
+    console.log("updatePendingPayment ", data);
+    let result = await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].updatePendingPayment(data);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("updatePendingPayment :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+async function getPaymentHistory(req, res) {
+  try {
+    console.log("getPaymentHistory ", req.query);
+    let result = await _controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_2__["default"].getPaymentHistory(req.query);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["SUCCESS"], "function executed successfully!", result));
+  } catch (err) {
+    console.error("getPaymentHistory :: Error ", err);
+    res.json(_lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].getExpressResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_3__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
 /***/ "./components/utility/QueryMediator.js":
 /*!*********************************************!*\
   !*** ./components/utility/QueryMediator.js ***!
@@ -354,66 +481,42 @@ var connection = mysql.createPool({
 /*!************************************************!*\
   !*** ./handler/payment-and-reciept-handler.js ***!
   \************************************************/
-/*! exports provided: putOrPostSocietyReciept, getSocietyReciept, updatePendingPayment, getPaymentHistory */
+/*! exports provided: societyRecieptHandler */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putOrPostSocietyReciept", function() { return putOrPostSocietyReciept; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSocietyReciept", function() { return getSocietyReciept; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePendingPayment", function() { return updatePendingPayment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPaymentHistory", function() { return getPaymentHistory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "societyRecieptHandler", function() { return societyRecieptHandler; });
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_society_reciept_controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/society-reciept/controller/SocietyRecieptController */ "./components/society-reciept/controller/SocietyRecieptController.js");
-/* harmony import */ var _lib_response_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/response-format */ "./lib/response-format.js");
+/* harmony import */ var _components_society_reciept_router_society_reciept_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/society-reciept/router/society-reciept-router */ "./components/society-reciept/router/society-reciept-router.js");
+/* harmony import */ var _components_society_reciept_router_public_society_reciept_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/society-reciept/router/public-society-reciept-router */ "./components/society-reciept/router/public-society-reciept-router.js");
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! serverless-http */ "serverless-http");
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(serverless_http__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! express */ "express");
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! body-parser */ "body-parser");
+/* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(body_parser__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
-async function putOrPostSocietyReciept(event) {
-  try {
-    let data = JSON.parse(event.body);
-    let httpMethod = event.httpMethod;
-    console.log("putOrPostSocietyReciept ", data);
-    await _components_society_reciept_controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_1__["default"].createOrUpdateReciept(data, httpMethod);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["SUCCESS"], "function executed successfully!", null);
-  } catch (err) {
-    console.error("putOrPostSocietyReciept :: Error ", err);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
-  }
-}
-async function getSocietyReciept(event) {
-  try {
-    console.log("getSocietyReciept ", event.queryStringParameters);
-    let result = await _components_society_reciept_controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_1__["default"].getPaymentStructure(event.queryStringParameters);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["SUCCESS"], "function executed successfully!", result);
-  } catch (err) {
-    console.error("getSocietyReciept :: Error ", err);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
-  }
-}
-async function updatePendingPayment(event) {
-  try {
-    let data = JSON.parse(event.body);
-    console.log("updatePendingPayment ", data);
-    let result = await _components_society_reciept_controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_1__["default"].updatePendingPayment(data);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["SUCCESS"], "function executed successfully!", result);
-  } catch (err) {
-    console.error("updatePendingPayment :: Error ", err);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
-  }
-}
-async function getPaymentHistory(event) {
-  try {
-    console.log("getPaymentHistory ", event.queryStringParameters);
-    let result = await _components_society_reciept_controller_SocietyRecieptController__WEBPACK_IMPORTED_MODULE_1__["default"].getPaymentHistory(event.queryStringParameters);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("success", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["SUCCESS"], "function executed successfully!", result);
-  } catch (err) {
-    console.error("getPaymentHistory :: Error ", err);
-    return _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].getResponseObject("error", _lib_response_format__WEBPACK_IMPORTED_MODULE_2__["default"].statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message);
-  }
+
+ // or any supported framework
+
+
+const app = express__WEBPACK_IMPORTED_MODULE_4___default()();
+app.use(body_parser__WEBPACK_IMPORTED_MODULE_5___default.a.urlencoded({
+  extended: false
+}));
+app.use(body_parser__WEBPACK_IMPORTED_MODULE_5___default.a.json());
+app.use("/payment-and-reciept", _components_society_reciept_router_society_reciept_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+app.use("/payment-and-reciept/public", _components_society_reciept_router_public_society_reciept_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
+async function societyRecieptHandler(event, context) {
+  const handler = serverless_http__WEBPACK_IMPORTED_MODULE_3___default()(app);
+  const result = handler(event, context);
+  return result;
 }
 
 /***/ }),
@@ -448,7 +551,7 @@ class ResponseFormat {
     };
   }
 
-  getResponseObject(type, code, message, data) {
+  getLambdaResponseObject(type, code, message, data) {
     let resObject = {
       statusCode: code,
       body: JSON.stringify({
@@ -466,9 +569,43 @@ class ResponseFormat {
     return resObject;
   }
 
+  getExpressResponseObject(type, code, message, data) {
+    let resObject = {
+      statusCode: code,
+      body: {
+        message: message,
+        data: data,
+        type: type
+      }
+    };
+    return resObject;
+  }
+
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (new ResponseFormat());
+
+/***/ }),
+
+/***/ "body-parser":
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("body-parser");
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
 
 /***/ }),
 
@@ -480,6 +617,17 @@ class ResponseFormat {
 /***/ (function(module, exports) {
 
 module.exports = require("mysql");
+
+/***/ }),
+
+/***/ "serverless-http":
+/*!**********************************!*\
+  !*** external "serverless-http" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("serverless-http");
 
 /***/ }),
 

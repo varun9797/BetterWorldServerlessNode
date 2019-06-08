@@ -71,49 +71,27 @@ custom:
 #    - exclude-me-dir/**
 
 functions:
-  societyRecieptPost:
-    handler: handler/payment-and-reciept-handler.putOrPostSocietyReciept
+  societyRecieptApi:
+    handler: handler/payment-and-reciept-handler.societyRecieptHandler
     events:
-     - http:
-         path: /societyReciept
-         method: POST
-  societyRecieptPut:
-    handler: handler/payment-and-reciept-handler.putOrPostSocietyReciept
+    - http:
+        method: any
+        path: payment-and-reciept/{proxy+}
+        cors: true
+  ownerApi:
+    handler: handler/owner-handler.ownerHandler
     events:
-     - http:
-         path: /societyReciept
-         method: PUT
-  societyRecieptGet:
-    handler: handler/payment-and-reciept-handler.getSocietyReciept
-    events:
-     - http:
-         path: /societyReciept
-         method: GET
-  updatePendingPayment:
-    handler: handler/payment-and-reciept-handler.updatePendingPayment
-    events:
-     - http:
-         path: /pendingPayment
-         method: PUT
-         cors: true
-  getPaymentHistory:
-    handler: handler/payment-and-reciept-handler.getPaymentHistory
-    events:
-     - http:
-         path: /paymentHistory
-         method: GET
-  registerOwner:
-    handler: handler/owner-handler.registerOwner
-    events:
-     - http:
-         path: /registerOwner
-         method: POST
+    - http:
+        method: any
+        path: owner/{proxy+}
+        cors: true
   loginUser:
-    handler: handler/login-handler.loginUser
+    handler: handler/auth-handler.authHandler
     events:
-     - http:
-         path: /loginUser
-         method: POST
+    - http:
+        method: any
+        path: auth/{proxy+}
+        cors: true
 plugins:
   - serverless-webpack
   - serverless-offline

@@ -3,7 +3,7 @@ import queryMediator from '../../utility/QueryMediator';
 
 class OwnerModel {
     constructor(){
-        console.log("inside SocietyModel");
+        console.log("inside OwnerModel");
          
     }
 
