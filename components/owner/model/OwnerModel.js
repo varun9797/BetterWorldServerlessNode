@@ -18,6 +18,18 @@ class OwnerModel {
             throw new Error(err);
         }
     } 
+
+    getOwnerDetails = async (body)=>{
+        try {
+            console.log("SocietyModel:: getOwnerDetails : ");
+            let query = `call get_owner_details_by_ownerid(${body.ownerId})`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse[0];
+        } catch(err) {
+            console.log("SocietyModel:: getOwnerDetails Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
 }
 
 export default new OwnerModel();

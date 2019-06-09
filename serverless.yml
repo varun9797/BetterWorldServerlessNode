@@ -118,6 +118,13 @@ functions:
         method: any
         path: auth/{proxy+}
         cors: true
+  flatApi:
+    handler: handler/flat-handler.flatHandler
+    events:
+    - http:
+        method: any
+        path: flat/{proxy+}
+        cors: true
 plugins:
   - serverless-webpack
   - serverless-offline
