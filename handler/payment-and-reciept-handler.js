@@ -4,11 +4,13 @@ import societyRecieptPublicRouter from "../components/society-reciept/router/pub
 import serverless from'serverless-http';
 import express from 'express'; // or any supported framework
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use("/payment-and-reciept", societyRecieptRouter);
 app.use("/payment-and-reciept/public", societyRecieptPublicRouter);
 

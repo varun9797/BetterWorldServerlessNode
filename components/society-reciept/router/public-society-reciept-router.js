@@ -12,10 +12,10 @@ async function getSocietyReciept(req, res) {
     try {
       console.log("getSocietyReciept ", req.query);
       let result = await societyRecieptController.getPaymentStructure(req.query);
-      res.json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
+      res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
     } catch (err) {
       console.error("getSocietyReciept :: Error ", err);
-      res.json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+      res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
     }
   }
   

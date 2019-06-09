@@ -10,10 +10,10 @@ export async function loginUser(req, res) {
       let data = req.body;
       console.log("registerOwner ", data);
       let result = await authenticationController.loginUser(data);
-      res.json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
+      res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
     } catch (err) {
       console.error("handler :: loginUser :: Error ", err);
-      res.json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+      res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
     }
   }
 
