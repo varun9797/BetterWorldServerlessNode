@@ -1,4 +1,4 @@
-import database from './../../database/mysql';
+import database from '../../../database/mysql';
 
 class QueryMediator {
 

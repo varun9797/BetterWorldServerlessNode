@@ -1,6 +1,6 @@
 'use strict';
-import societyRecieptRouter from "../components/society-reciept/router/society-reciept-router"
-import societyRecieptPublicRouter from "../components/society-reciept/router/public-society-reciept-router"
+import societyRecieptRouter from "../src/components/society-reciept/router/society-reciept-router"
+import societyRecieptPublicRouter from "../src/components/society-reciept/router/public-society-reciept-router"
 import serverless from'serverless-http';
 import express from 'express'; // or any supported framework
 import bodyParser from 'body-parser';

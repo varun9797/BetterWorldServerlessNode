@@ -4,7 +4,7 @@ var router = express.Router();
 router.post("/loginUser",loginUser);
 
 import authenticationController from "../controller/AuthenticationController";
-import responseFormat from "../../../lib/response-format"
+import responseFormat from "../../../../lib/response-format"
 export async function loginUser(req, res) {
     try {
       let data = req.body;

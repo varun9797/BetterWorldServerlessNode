@@ -2,7 +2,7 @@
 
 
 'use strict';
-import flatRouter from "../components/flat/router/FlatRouter";
+import flatRouter from "../src/components/flat/router/FlatRouter";
 import serverless from'serverless-http';
 import express from 'express'; // or any supported framework
 import bodyParser from 'body-parser'; 

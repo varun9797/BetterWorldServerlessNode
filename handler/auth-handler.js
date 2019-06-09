@@ -2,7 +2,7 @@
 
 
 'use strict';
-import authenticationRouter from "../components/authentication/router/authentication-router";
+import authenticationRouter from "../src/components/authentication/router/authentication-router";
 import serverless from'serverless-http';
 import express from 'express'; // or any supported framework
 import bodyParser from 'body-parser'; 

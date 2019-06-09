@@ -2,7 +2,7 @@
 
 
 'use strict';
-import ownerRouter from "../components/owner/router/owner-router";
+import ownerRouter from "../src/components/owner/router/owner-router";
 import serverless from'serverless-http';
 import express from 'express'; // or any supported framework
 import bodyParser from 'body-parser'; 

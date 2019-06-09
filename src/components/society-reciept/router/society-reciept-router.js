@@ -2,7 +2,7 @@ import express from 'express';
 var router = express.Router();
 
 import societyRecieptController from "../controller/SocietyRecieptController";
-import responseFormat from "../../../lib/response-format"
+import responseFormat from "../../../../lib/response-format"
 
 
 router.get("/societyReciept",getSocietyReciept);

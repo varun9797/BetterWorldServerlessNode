@@ -1,6 +1,6 @@
 import authenticationModel from "../model/AuthenticationModel"
-import bcrypt from '../../../lib/bcrypt'
-import jwt from '../../../lib/jwt'
+import bcrypt from '../../../../lib/bcrypt'
+import jwt from '../../../../lib/jwt'
 
 class AuthenticationController {
     constructor(){

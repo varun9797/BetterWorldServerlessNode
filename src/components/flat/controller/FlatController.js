@@ -1,5 +1,5 @@
 import flatModel from "../model/FlatModel"
-import responseFormat from "../../../lib/response-format"
+import responseFormat from "../../../../lib/response-format"
 
 class FlatController {
     constructor(){
