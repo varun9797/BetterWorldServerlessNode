@@ -9,7 +9,8 @@ router.get("/societyReciept",getSocietyReciept);
 router.post("/societyReciept",putOrPostSocietyReciept);
 router.put("/societyReciept",putOrPostSocietyReciept);
 router.put("/pendingPayment",updatePendingPayment);
-router.get("/paymentHistory",getPaymentHistory);
+router.get("/paymentHistory",getPaymentHistory);monthlyRecieptUpdateByCron
+router.get("/monthlyRecieptUpdateByCron",monthlyRecieptUpdateByCron);
 
 async function getSocietyReciept(req, res) {
     try {
@@ -32,6 +33,19 @@ async function getSocietyReciept(req, res) {
       res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", null));
     } catch (err) {
       console.error("putOrPostSocietyReciept :: Error ", err);
+      res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+    }
+  }
+
+  export async function monthlyRecieptUpdateByCron(req, res) {
+    try {
+
+      console.log("request method is ");
+      console.log("monthlyRecieptUpdateByCron ");
+      await societyRecieptController.monthlyRecieptUpdateByCron();
+      res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", null));
+    } catch (err) {
+      console.error("monthlyRecieptUpdateByCron :: Error ", err);
       res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
     }
   }

@@ -62,6 +62,38 @@ class SocietyRecieptModel {
         }
     }
 
+    getDistinctSocietyIdAndFlatType = async ()=>{
+        try {
+            console.log("SocietyRecieptModel:: updatePendingPayment : ");
+            let query = `select
+            (select  group_concat(DISTINCT societyid) from flat) as societyid,
+            (SELECT group_concat(DISTINCT flattype) FROM flat) as flattype;`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
+    monthlyRecieptUpdateByCron = async (body)=>{
+        try {
+            console.log("SocietyRecieptModel:: monthlyRecieptUpdateByCron : ");
+            let query = `UPDATE flat f1 
+            INNER JOIN (SELECT flatid, SUM(f.pendingpayment + f.maintenanceAmount) AS newPendingAmt FROM flat f GROUP BY flatId
+            ) AS f2 ON f1.flatid = f2.flatid
+            SET  f1.pendingpayment = newPendingAmt ,f1.maintenanceAmount = ${body.maintenanceAmount}, f1.updatedBy = "cron"
+            where societyid = ${body.societyId}	and	FlatType = ${body.flatType} ;`;
+            //console.log(query);
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: monthlyRecieptUpdateByCron Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+    
+
 }
 
 export default new SocietyRecieptModel();

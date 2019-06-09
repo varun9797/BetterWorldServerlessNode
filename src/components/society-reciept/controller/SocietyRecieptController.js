@@ -22,6 +22,24 @@ class SocietyRecieptController {
         } 
     }
 
+    monthlyRecieptUpdateByCron = async () =>{
+        try {
+            console.log("SocietyRecieptController :: createOrUpdateReciept");
+            let result = await societyRecieptModel.getDistinctSocietyIdAndFlatType();
+            let societyIdArray = result[0].societyid.split(',');
+            let flatTypeArray = result[0].flattype.split(',');
+            for(let societyId of societyIdArray){
+                for(let flatType of flatTypeArray){
+                    await societyRecieptModel.monthlyRecieptUpdateByCron({maintenanceAmount:1200,societyId:societyId,flatType:flatType})
+                }
+            }
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
+            throw new Error(err);
+        } 
+    }
+
     getPaymentStructure = async (body) => {
         try {
             console.log("SocietyRecieptController :: createOrUpdateReciept");

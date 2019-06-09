@@ -104,6 +104,14 @@ functions:
         method: any
         path: payment-and-reciept/{proxy+}
         cors: true
+  monthlyRecieptUpdateByCron:
+    handler: handler/payment-and-reciept-handler.monthlyRecieptUpdateByCron
+    events:
+    - http:
+        method: get
+        path: monthlyRecieptUpdateByCron
+        cors: true
+        rate: cron(0 8 10 * ? *)
   ownerApi:
     handler: handler/owner-handler.ownerHandler
     events:
