@@ -111,7 +111,7 @@ functions:
         method: get
         path: monthlyRecieptUpdateByCron
         cors: true
-        rate: cron(0 8 10 * ? *)
+        rate: cron(9 30 * * ? *)
   ownerApi:
     handler: handler/owner-handler.ownerHandler
     events:
