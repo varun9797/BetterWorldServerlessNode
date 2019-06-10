@@ -1,6 +1,6 @@
-import ownerModel from "./../model/OwnerModel"
-import bcrypt from '../../../../lib/bcrypt'
-import responseFormat from "../../../../lib/response-format"
+import ownerModel from "./../model/OwnerModel";
+import bcrypt from "../../../../lib/bcrypt";
+import responseFormat from "../../../../lib/response-format";
 
 class OwnerController {
     constructor(){

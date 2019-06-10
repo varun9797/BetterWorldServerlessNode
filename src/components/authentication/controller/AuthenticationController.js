@@ -1,7 +1,8 @@
-import authenticationModel from "../model/AuthenticationModel"
-import bcrypt from '../../../../lib/bcrypt'
-import jwt from '../../../../lib/jwt'
-import responseFormat from "../../../../lib/response-format"
+import authenticationModel from "../model/AuthenticationModel";
+import bcrypt from '../../../../lib/bcrypt';
+import jwt from '../../../../lib/jwt';
+import responseFormat from "../../../../lib/response-format";
+
 
 class AuthenticationController {
     constructor(){

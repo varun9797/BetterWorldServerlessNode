@@ -30,6 +30,8 @@ provider:
     MYSQLPASS: ${self:custom.mysqlPassword.${self:provider.stage}}
     MYSQLDATABASE: ${self:custom.mysqlDatabase.${self:provider.stage}}
     SECRET_KEY: ${ssm:secretKey}
+    EMAIL: "verma9797@gmail.com"
+    PASSWORD: ${ssm:gmailPwd}
 
 # you can overwrite defaults here
 #  stage: dev
