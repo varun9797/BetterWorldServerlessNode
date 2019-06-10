@@ -39,7 +39,7 @@ class AuthenticationController {
             var token = req.body.token || req.headers["token"];
             if(token) {
                let result =  jwt.verifyToken(token);
-                    if (result) {
+                    if (!result) {
                         res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Token is invalid", null));
                     } else {
                         res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "valid token"));
