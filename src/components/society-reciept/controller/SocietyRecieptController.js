@@ -30,7 +30,7 @@ class SocietyRecieptController {
             let flatTypeArray = result[0].flattype.split(',');
             for(let societyId of societyIdArray){
                 for(let flatType of flatTypeArray){
-                    await societyRecieptModel.monthlyRecieptUpdateByCron({maintenanceAmount:1200,societyId:societyId,flatType:flatType})
+                    await societyRecieptModel.monthlyRecieptUpdateByCron({maintenanceAmount:0,societyId:societyId,flatType:flatType})
                 }
             }
             return result;
