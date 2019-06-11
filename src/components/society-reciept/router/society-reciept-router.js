@@ -9,7 +9,7 @@ router.get("/societyReciept",getSocietyReciept);
 router.post("/societyReciept",putOrPostSocietyReciept);
 router.put("/societyReciept",putOrPostSocietyReciept);
 router.put("/pendingPayment",updatePendingPayment);
-router.get("/paymentHistory",getPaymentHistory);monthlyRecieptUpdateByCron
+router.get("/paymentHistory",getPaymentHistory);
 router.get("/monthlyRecieptUpdateByCron",monthlyRecieptUpdateByCron);
 
 async function getSocietyReciept(req, res) {
