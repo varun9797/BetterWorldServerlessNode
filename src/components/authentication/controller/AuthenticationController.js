@@ -22,10 +22,10 @@ class AuthenticationController {
                     let signInToken = await jwt.signIn(result);
                     res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", signInToken));
                 } else {
-                    res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Invalid Password!", null));
+                    res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Invalid Password!", null));
                 }
             } else {
-                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Invalid Email!", null));
+                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Invalid Email!", null));
             }
         } catch(err) {
             console.log("AuthenticationController :: loginUser :: Error", err);
@@ -36,16 +36,16 @@ class AuthenticationController {
     verifyTokenApi = async (req, res) => {
         try {
             console.log("AuthenticationController :: verifyToken");
-            var token = req.body.token || req.headers["token"];
+            var token = req.body.token || req.headers["x-access-token"];
             if(token) {
                let result = await jwt.verifyToken(token);
                     if (!result) {
-                        res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Token is invalid", null));
+                        res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Token is invalid", null));
                     } else {
                         res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "valid token"));
                     }
             } else {
-                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Please send the token", null));
+                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Please send the token", null));
             }
         } catch(err) {
             console.log("AuthenticationController :: verifyToken :: Error", err);
