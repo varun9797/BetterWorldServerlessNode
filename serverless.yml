@@ -109,11 +109,9 @@ functions:
   monthlyRecieptUpdateByCron:
     handler: handler/payment-and-reciept-handler.monthlyRecieptUpdateByCron
     events:
-    - http:
-        method: get
-        path: monthlyRecieptUpdateByCron
-        cors: true
-        rate: cron(9 30 * * ? *)
+    - schedule:
+        rate: cron(0 0 13 * ? *)
+        enabled: true
   ownerApi:
     handler: handler/owner-handler.ownerHandler
     events:
