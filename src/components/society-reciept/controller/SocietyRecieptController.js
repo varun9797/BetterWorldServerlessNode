@@ -1,5 +1,5 @@
 import societyRecieptModel from "./../model/SocietyRecieptModel"
-
+import notification from "./../../utility/Notification"
 
 class SocietyRecieptController {
     constructor(){
@@ -15,9 +15,24 @@ class SocietyRecieptController {
                 promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
             })
             await Promise.all(promiseArr);
+            this.notifyOwnersOnNewMonthlyReciept(body);
             return;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
+            throw new Error(err);
+        } 
+    }
+
+    notifyOwnersOnNewMonthlyReciept = async (body) => {
+        try {
+            console.log("SocietyRecieptController :: notifyOwnersOnNewMonthlyReciept");
+            let result = await societyRecieptModel.getOwnersEmailBySocietyIdAndFlatType(body);
+            for (let obj of result){
+                await notification.newMaintenanceRecipet(obj);
+            }
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptController :: notifyOwnersOnNewMonthlyReciept :: Error", err);
             throw new Error(err);
         } 
     }
@@ -33,6 +48,7 @@ class SocietyRecieptController {
                     await societyRecieptModel.monthlyRecieptUpdateByCron({maintenanceAmount:0,societyId:societyId,flatType:flatType})
                 }
             }
+            this.notifyOwnersOnCronUpdation(societyIdArray);
             return result;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
@@ -69,7 +85,23 @@ class SocietyRecieptController {
             console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
             throw new Error(err);
         } 
-    } 
+    }
+
+    
+    
+    notifyOwnersOnCronUpdation = async (societyIds) => {
+        try {
+            console.log("SocietyRecieptController :: getOwnersEmailBySocietyIds");
+            let result = await societyRecieptModel.getOwnersEmailBySocietyIds(societyIds);
+            for (let obj of result){
+                await notification.pendingAmountUpdationByCron(obj);
+            }
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptController :: getOwnersEmailBySocietyIds :: Error", err);
+            throw new Error(err);
+        } 
+    }
 }
 
 export default new SocietyRecieptController();

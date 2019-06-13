@@ -94,6 +94,36 @@ class SocietyRecieptModel {
     }
     
 
+    getOwnersEmailBySocietyIds = async (societyIds)=>{
+        try {
+            console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds : ");
+            let query = `SELECT  o.email, o.ownername, f.maintenanceAmount, f.pendingpayment, f.flatid, f.flatname, s.societyname FROM owner o 
+            inner join flat f on f.ownerid = o.ownerid 
+            inner join society s on s.societyid = f.societyid
+            where s.societyid in (${societyIds})`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
+    getOwnersEmailBySocietyIdAndFlatType = async (body)=>{
+        try {
+            console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds : ");
+            let query = `SELECT  P.buildingMaintenance,  P.parkingMaintenance,P.municipalDue, P.sinkingFund, P.electricityCharge, P.createdBy, P.createdDate, P.updatedBy, P.updatedDate , O.email, O.ownername,F.flatid, F.flatType FROM owner O 
+            inner join flat F on F.ownerid = O.ownerid 
+            inner join paymentstructure P on F.paymentStructureId = P.id  
+            where F.societyid = ${body.societyId} and F.flatType in (${body.flatTypeArr}) and P.isActive =1`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
 }
 
 export default new SocietyRecieptModel();

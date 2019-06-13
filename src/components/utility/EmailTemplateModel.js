@@ -14,7 +14,7 @@ class EmailTemplateModel {
                 if(params.htmlContent) {
                     rawHtml = params.htmlContent;
                 } else {
-                    const sql = "SELECT template FROM message_template WHERE id = " + mysql.escape(params.message_template_id) + " AND row_status = '1'";
+                    const sql = "SELECT template FROM messagetemplate WHERE id = " + mysql.escape(params.message_template_id) + " AND row_status = '1'";
                     let result = await queryMediator.queryConnection(sql);
                     rawHtml=result.dbResponse[0]["template"];
                 }

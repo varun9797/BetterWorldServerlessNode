@@ -44,6 +44,71 @@ class Notification {
         }
     }
 
+    pendingAmountUpdationByCron = async (reqBody) => {
+        console.log("Notification : auctionDeniedNotification ");
+        try {
+            const paramObj = {
+                values: {
+                    name:reqBody.ownername,
+                    pendingpayment:reqBody.pendingpayment,
+                    flatid:reqBody.flatid,
+                    flatname:reqBody.flatname,
+                    societyname:reqBody.societyname,
+                    maintenanceAmount:reqBody.maintenanceAmount
+                },
+                message_template_id: MESSAGE_TEMPLATE.PENDING_AMOUNT_UPDATED_BY_CRON
+            };
+            let htmlTemplate = await emailTemplateModel.getEmailTemplate(
+                paramObj
+            );
+            let paramsMailObj = {
+                email: reqBody.email,
+                subject: "Your Pending Amount Has Been Updated",
+                htmlBody: htmlTemplate
+            };
+            console.log(paramsMailObj);
+            await this.sendEmail(paramsMailObj);
+            throw new Error("temp halted")
+            //res.send("mail sent!!");
+        } catch (err) {
+            console.log("Notification  : auctionDeniedNotification :: error ", err);
+            res.send("something went wrong!!", err);
+        }
+    }
+
+    newMaintenanceRecipet = async (reqBody) => {
+        console.log("Notification : auctionDeniedNotification ");
+        try {
+            const paramObj = {
+                values: {
+                    name:reqBody.ownername,
+                    buildingMaintenance:reqBody.buildingMaintenance,
+                    municipalDue:reqBody.municipalDue,
+                    sinkingFund:reqBody.sinkingFund,
+                    electricityCharge:reqBody.electricityCharge,
+                    flatType:reqBody.flatType,
+                    parkingMaintenance:reqBody.parkingMaintenance                   
+                },
+                message_template_id: MESSAGE_TEMPLATE.MENTAINANCE_RECIEPT
+            };
+            let htmlTemplate = await emailTemplateModel.getEmailTemplate(
+                paramObj
+            );
+            let paramsMailObj = {
+                email: reqBody.email,
+                subject: "Your Society Maintenance Reciept Has Been Generated",
+                htmlBody: htmlTemplate
+            };
+            console.log(paramsMailObj);
+            await this.sendEmail(paramsMailObj);
+            throw new Error("temp halted")
+            //res.send("mail sent!!");
+        } catch (err) {
+            console.log("Notification  : auctionDeniedNotification :: error ", err);
+            res.send("something went wrong!!", err);
+        }
+    }
+
     sendEmail = async params => {
         console.log("Notification : sendEmail ");
         try {

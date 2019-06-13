@@ -30,7 +30,7 @@ provider:
     MYSQLPASS: ${self:custom.mysqlPassword.${self:provider.stage}}
     MYSQLDATABASE: ${self:custom.mysqlDatabase.${self:provider.stage}}
     SECRET_KEY: ${ssm:secretKey}
-    EMAIL: "verma9797@gmail.com"
+    EMAIL: "betterworld9797@gmail.com"
     PASSWORD: ${ssm:gmailPwd}
 
 # you can overwrite defaults here
@@ -109,6 +109,9 @@ functions:
   monthlyRecieptUpdateByCron:
     handler: handler/payment-and-reciept-handler.monthlyRecieptUpdateByCron
     events:
+    - http:
+        method: get
+        path: monthlyRecieptUpdateByCron/{proxy+}
     - schedule:
         rate: cron(0 0 13 * ? *)
         enabled: true
