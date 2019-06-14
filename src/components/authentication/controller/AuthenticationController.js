@@ -56,17 +56,16 @@ class AuthenticationController {
     verifyTokenMiddleware = async (req, res, next) => {
         try {
             console.log("AuthenticationController :: verifyToken");
-            var token = req.body.token || req.headers["token"];
+            var token = req.body.token || req.headers["x-access-token"];
             if(token) {
-                jwt.verify(token, process.env.SECRET_KEY, function(err, data) {
-                    if (err) {
-                        res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Token is invalid", null));
+               let result = await jwt.verifyToken(token);
+                    if (!result) {
+                        res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Token is invalid", null));
                     } else {
-                        next();
+                        next()
                     }
-                })
             } else {
-                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Please send the token", null));
+                res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Please send the token", null));
             }
         } catch(err) {
             console.log("AuthenticationController :: verifyToken :: Error", err);

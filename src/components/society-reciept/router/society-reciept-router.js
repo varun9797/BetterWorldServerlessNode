@@ -1,16 +1,16 @@
 import express from 'express';
 var router = express.Router();
-
+import authenticationController from './../../authentication/controller/AuthenticationController';
 import societyRecieptController from "../controller/SocietyRecieptController";
 import responseFormat from "../../../../lib/response-format"
 
 
-router.get("/societyReciept",getSocietyReciept);
-router.post("/societyReciept",putOrPostSocietyReciept);
-router.put("/societyReciept",putOrPostSocietyReciept);
-router.put("/pendingPayment",updatePendingPayment);
-router.get("/paymentHistory",getPaymentHistory);
-router.get("/monthlyRecieptUpdateByCron",monthlyRecieptUpdateByCron);
+router.get("/societyReciept", authenticationController.verifyTokenMiddleware, getSocietyReciept);
+router.post("/societyReciept", authenticationController.verifyTokenMiddleware, putOrPostSocietyReciept);
+router.put("/societyReciept", authenticationController.verifyTokenMiddleware, putOrPostSocietyReciept);
+router.put("/pendingPayment", authenticationController.verifyTokenMiddleware, updatePendingPayment);
+router.get("/paymentHistory",  authenticationController.verifyTokenMiddleware, getPaymentHistory);
+router.get("/monthlyRecieptUpdateByCron", authenticationController.verifyTokenMiddleware, monthlyRecieptUpdateByCron);
 
 async function getSocietyReciept(req, res) {
     try {
