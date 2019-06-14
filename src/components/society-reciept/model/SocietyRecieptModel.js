@@ -53,7 +53,7 @@ class SocietyRecieptModel {
     getPaymentHistory = async (body)=>{
         try {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");
-            let query = `select idpaymenthistory, flatid, amount, createddate, updateddate, ownerid, remainingbalance, updatedby, comment from paymenthistory where flatid = ${body.flatId}`;
+            let query = `select idpaymenthistory, flatid, amount, createddate, updateddate, ownerid, remainingbalance, updatedby, comment from paymenthistory where flatid = ${body.flatId} order by createddate DESC`;
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
         } catch(err) {
