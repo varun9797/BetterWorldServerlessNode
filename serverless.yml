@@ -127,7 +127,7 @@ functions:
         method: get
         path: monthlyRecieptUpdateByCron/{proxy+}
     - schedule:
-        rate: cron(0 0 13 * ? *)
+        rate: cron(0 0 1 * ? *)
         enabled: true
   ownerApi:
     handler: handler/owner-handler.ownerHandler

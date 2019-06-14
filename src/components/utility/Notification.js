@@ -52,6 +52,7 @@ class Notification {
                     name:reqBody.ownername,
                     pendingpayment:reqBody.pendingpayment,
                     flatid:reqBody.flatid,
+                    buildingname:reqBody.buildingname,
                     flatname:reqBody.flatname,
                     societyname:reqBody.societyname,
                     maintenanceAmount:reqBody.maintenanceAmount
@@ -68,7 +69,7 @@ class Notification {
             };
             console.log(paramsMailObj);
             await this.sendEmail(paramsMailObj);
-            throw new Error("temp halted")
+            //throw new Error("temp halted")
             //res.send("mail sent!!");
         } catch (err) {
             console.log("Notification  : auctionDeniedNotification :: error ", err);
@@ -82,6 +83,10 @@ class Notification {
             const paramObj = {
                 values: {
                     name:reqBody.ownername,
+                    flatid:reqBody.flatid,
+                    buildingname:reqBody.buildingname,
+                    societyname:reqBody.societyname,
+                    flatname:reqBody.flatname,
                     buildingMaintenance:reqBody.buildingMaintenance,
                     municipalDue:reqBody.municipalDue,
                     sinkingFund:reqBody.sinkingFund,
@@ -101,7 +106,7 @@ class Notification {
             };
             console.log(paramsMailObj);
             await this.sendEmail(paramsMailObj);
-            throw new Error("temp halted")
+            //throw new Error("temp halted")
             //res.send("mail sent!!");
         } catch (err) {
             console.log("Notification  : auctionDeniedNotification :: error ", err);
