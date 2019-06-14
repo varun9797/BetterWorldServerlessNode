@@ -60,6 +60,19 @@ provider:
 package:
   individually: true
 
+costomCors: &costomCors
+    origins:
+      - '*'
+    headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - x-access-token
+    allowCredentials: false
+
 custom:
   stages:
     - dev
@@ -105,7 +118,8 @@ functions:
     - http:
         method: any
         path: payment-and-reciept/{proxy+}
-        cors: true
+        cors: 
+          <<: *costomCors
   monthlyRecieptUpdateByCron:
     handler: handler/payment-and-reciept-handler.monthlyRecieptUpdateByCron
     events:
@@ -121,39 +135,33 @@ functions:
     - http:
         method: any
         path: owner/{proxy+}
-        cors: true
+        cors: 
+          <<: *costomCors
   authUser:
     handler: handler/auth-handler.authHandler
     events:
     - http:
         method: any
         path: auth/{proxy+}
-        cors:  
-          origins:
-            - '*'
-          headers:
-            - Content-Type
-            - X-Amz-Date
-            - Authorization
-            - X-Api-Key
-            - X-Amz-Security-Token
-            - X-Amz-User-Agent
-            - x-access-token
-          allowCredentials: false
+        cors: 
+          <<: *costomCors
+          
   flatApi:
     handler: handler/flat-handler.flatHandler
     events:
     - http:
         method: any
         path: flat/{proxy+}
-        cors: true
+        cors: 
+          <<: *costomCors
   societyApi:
     handler: handler/society-handler.societyHandler
     events:
     - http:
         method: any
         path: society/{proxy+}
-        cors: true
+        cors: 
+          <<: *costomCors
 plugins:
   - serverless-webpack
   - serverless-offline
