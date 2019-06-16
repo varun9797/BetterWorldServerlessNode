@@ -5,8 +5,9 @@ var router = express.Router();
 import ownerController from "../controller/OwnerController";
 
 
-router.post("/registerOwner", authenticationController.verifyTokenMiddleware, ownerController.registerOwner);
-router.get("/ownerDetails", authenticationController.verifyTokenMiddleware, ownerController.getOwnerDetails);
+router.post("/registerOwner", ownerController.registerOwner);
+router.get("/ownerDetails", ownerController.getOwnerDetails);
+router.patch("/:ownerId/ownerDetails",  ownerController.updateOwnerDetails);
 
 
 

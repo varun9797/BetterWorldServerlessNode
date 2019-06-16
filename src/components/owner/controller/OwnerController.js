@@ -32,6 +32,19 @@ class OwnerController {
             res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
         } 
     } 
+
+    updateOwnerDetails  = async (req, res) => {
+        try {
+            console.log("OwnerController :: updateOwnerDetails");
+            let body = req.body;
+            body.ownerId = req.query.ownerId;
+            let result = await ownerModel.updateOwnerDetails(body);
+            res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
+        } catch(err) {
+            console.log("OwnerController :: updateOwnerDetails :: Error", err);
+            res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+        } 
+    } 
 }
 
 export default new OwnerController();

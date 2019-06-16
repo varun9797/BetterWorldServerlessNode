@@ -30,6 +30,23 @@ class OwnerModel {
             throw new Error(err);
         }
     }
+
+    updateOwnerDetails = async (body)=>{
+        try {
+            if(body.ownerId) {
+                console.log("SocietyModel:: updateOwnerDetails : ");
+                //let query = `update owner set ownername = '${body.ownerName}', email= '${body.email}', phonenumber= '${body.phonenumber}', dateOfBirth = '${body.dateOfBirth}', gender =${body.gender} where ownerid=${body.ownerId}`;
+                let query = `UPDATE owner SET ? WHERE ownerid=${body.ownerId}`;
+                let result = await queryMediator.queryConnection(query, body);
+                return result.dbResponse;
+            } else {
+                throw new Error("Missing Owner Id")
+            }
+        } catch(err) {
+            console.log("SocietyModel:: updateOwnerDetails Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
 }
 
 export default new OwnerModel();
