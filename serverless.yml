@@ -149,8 +149,7 @@ functions:
         method: any
         path: auth/{proxy+}
         cors: 
-          <<: *costomCors
-          
+          <<: *costomCors      
   flatApi:
     handler: handler/flat-handler.flatHandler
     events:

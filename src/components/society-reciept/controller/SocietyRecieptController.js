@@ -18,8 +18,9 @@ class SocietyRecieptController {
                 promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
             })
             await Promise.all(promiseArr);
-            //this.notifyOwnersOnNewMonthlyReciept(body);
+            //this.notifyOwnersOnNewMonthlyReciept(body);        
             this.invokeLambda(body);
+            await new Promise(resolve => setTimeout(resolve, 300));
             return;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
