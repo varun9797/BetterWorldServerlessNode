@@ -1,6 +1,9 @@
 import societyRecieptModel from "./../model/SocietyRecieptModel"
 import notification from "./../../utility/Notification"
 
+var aws = require('aws-sdk');
+var lambda = new aws.Lambda();
+
 class SocietyRecieptController {
     constructor(){
         console.log("inside SocietyRecieptController");
@@ -15,12 +18,28 @@ class SocietyRecieptController {
                 promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
             })
             await Promise.all(promiseArr);
-            this.notifyOwnersOnNewMonthlyReciept(body);
+            //this.notifyOwnersOnNewMonthlyReciept(body);
+            this.invokeLambda(body);
             return;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
             throw new Error(err);
         } 
+    }
+
+    invokeLambda = async (event) =>{
+        let params = {
+            FunctionName: 'lambda-node-dev-email',
+            InvocationType: 'RequestResponse',
+            Payload: JSON.stringify(event, null, 2)
+          };
+          return await lambda.invoke(params, function(err, data) {
+            if (err) {
+                console.log('ambda-node-dev-email :: Error ' +  err);
+            } else {
+              console.log('ambda-node-dev-email inoked ' +  data.Payload);
+            }
+          }).promise();
     }
 
     notifyOwnersOnNewMonthlyReciept = async (body) => {
@@ -30,7 +49,7 @@ class SocietyRecieptController {
             for (let obj of result){
                 await notification.newMaintenanceRecipet(obj);
             }
-            return result;
+            return "Email Sent!!!";
         } catch(err) {
             console.log("SocietyRecieptController :: notifyOwnersOnNewMonthlyReciept :: Error", err);
             throw new Error(err);

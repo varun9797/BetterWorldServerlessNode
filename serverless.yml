@@ -162,6 +162,12 @@ functions:
         path: society/{proxy+}
         cors: 
           <<: *costomCors
+  email:
+    handler: handler/email-handler.email
+    events:
+    - http:
+        method: post
+        path: email
 plugins:
   - serverless-webpack
   - serverless-offline
