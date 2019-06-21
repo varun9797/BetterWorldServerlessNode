@@ -50,6 +50,22 @@ class SocietyRecieptModel {
         }
     }
 
+    getOwnerDetailByflatId = async (flatid)=>{
+        try {
+            console.log("SocietyRecieptModel:: updatePendingPayment : ");
+            let query = `SELECT  o.email, o.ownername, f.maintenanceAmount, f.buildingname, f.pendingpayment, f.flatid, f.flatname, s.societyname FROM  flat f
+            left join owner o on f.ownerid = o.ownerid 
+            left join society s on s.societyid = f.societyid
+            where f.flatid = ${flatid} and o.status =1`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: updatePendingPayment Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
+
     getPaymentHistory = async (body)=>{
         try {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");

@@ -18,9 +18,10 @@ class SocietyRecieptController {
                 promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
             })
             await Promise.all(promiseArr);
-            //this.notifyOwnersOnNewMonthlyReciept(body);        
+            //this.notifyOwnersOnNewMonthlyReciept(body); 
+            body.method = "notifyOwnersOnNewMonthlyReciept";   
             this.invokeLambda(body);
-            await new Promise(resolve => setTimeout(resolve, 300));
+            await new Promise(resolve => setTimeout(resolve, 50));
             return;
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
@@ -59,7 +60,7 @@ class SocietyRecieptController {
 
     monthlyRecieptUpdateByCron = async () =>{
         try {
-            console.log("SocietyRecieptController :: createOrUpdateReciept");
+            console.log("SocietyRecieptController :: monthlyRecieptUpdateByCron");
             let result = await societyRecieptModel.getDistinctSocietyIdAndFlatType();
             let societyIdArray = result[0].societyid.split(',');
             let flatTypeArray = result[0].flattype.split(',');
@@ -71,18 +72,18 @@ class SocietyRecieptController {
             this.notifyOwnersOnCronUpdation(societyIdArray);
             return result;
         } catch(err) {
-            console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
+            console.log("SocietyRecieptController :: monthlyRecieptUpdateByCron :: Error", err);
             throw new Error(err);
         } 
     }
 
     getPaymentStructure = async (body) => {
         try {
-            console.log("SocietyRecieptController :: createOrUpdateReciept");
+            console.log("SocietyRecieptController :: getPaymentStructure");
             let result = await societyRecieptModel.getPaymentStructure(body);
             return result;
         } catch(err) {
-            console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
+            console.log("SocietyRecieptController :: getPaymentStructure :: Error", err);
             throw new Error(err);
         } 
     }
@@ -90,19 +91,38 @@ class SocietyRecieptController {
         try {
             console.log("SocietyRecieptController :: updatePendingPayment");
             let result = await societyRecieptModel.updatePendingPayment(body);
+            //this.notifyOwnerOnUpdateOfPendingPayment(body)
+            body.method = "notifyOwnerOnUpdateOfPendingPayment"; 
+            this.invokeLambda(body);
+            await new Promise(resolve => setTimeout(resolve, 50));
             return result;
         } catch(err) {
             console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
             throw new Error(err);
         } 
     } 
+
+    notifyOwnerOnUpdateOfPendingPayment = async (body) => {
+        try {
+            console.log("SocietyRecieptController :: notifyOwnerOnUpdateOfPendingPayment");
+            let result = await societyRecieptModel.getOwnerDetailByflatId(body.flatid)
+            for (let obj of result){
+                await notification.pendingAmountUpdation(obj);
+            }
+            return result;
+        } catch(err) {
+            console.log("SocietyRecieptController :: notifyOwnerOnUpdateOfPendingPayment :: Error", err);
+            throw new Error(err);
+        } 
+    }
+
     getPaymentHistory = async (body) => {
         try {
-            console.log("SocietyRecieptController :: updatePendingPayment");
+            console.log("SocietyRecieptController :: getPaymentHistory");
             let result = await societyRecieptModel.getPaymentHistory(body);
             return result;
         } catch(err) {
-            console.log("SocietyRecieptController :: updatePendingPayment :: Error", err);
+            console.log("SocietyRecieptController :: getPaymentHistory :: Error", err);
             throw new Error(err);
         } 
     }
@@ -111,14 +131,14 @@ class SocietyRecieptController {
     
     notifyOwnersOnCronUpdation = async (societyIds) => {
         try {
-            console.log("SocietyRecieptController :: getOwnersEmailBySocietyIds");
+            console.log("SocietyRecieptController :: notifyOwnersOnCronUpdation");
             let result = await societyRecieptModel.getOwnersEmailBySocietyIds(societyIds);
             for (let obj of result){
-                await notification.pendingAmountUpdationByCron(obj);
+                await notification.pendingAmountUpdation(obj);
             }
             return result;
         } catch(err) {
-            console.log("SocietyRecieptController :: getOwnersEmailBySocietyIds :: Error", err);
+            console.log("SocietyRecieptController :: notifyOwnersOnCronUpdation :: Error", err);
             throw new Error(err);
         } 
     }

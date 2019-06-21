@@ -44,7 +44,7 @@ class Notification {
         }
     }
 
-    pendingAmountUpdationByCron = async (reqBody) => {
+    pendingAmountUpdation = async (reqBody) => {
         console.log("Notification : auctionDeniedNotification ");
         try {
             const paramObj = {
