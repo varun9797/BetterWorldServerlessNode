@@ -1,5 +1,6 @@
 import SocietyModel from "../model/SocietyModel";
 import responseFormat from "../../../../lib/response-format";
+import googleUtility from "../../utility/google-util";
 
 class SocietyController {
     constructor(){
@@ -11,6 +12,8 @@ class SocietyController {
         try {
             let body = req.query;
             console.log("SocietyController :: getSocietyBySocietyId");
+            //let result = await googleUtility.urlGoogle();
+            //result = await googleUtility.getGoogleAccountFromCode(result);
             let result = await SocietyModel.getSocietyBySocietyId(body);
             res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
         } catch(err) {
