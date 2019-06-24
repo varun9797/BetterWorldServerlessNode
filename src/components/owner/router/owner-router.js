@@ -1,5 +1,4 @@
 import express from "express";
-import authenticationController from './../../authentication/controller/AuthenticationController';
 var router = express.Router();
 
 import ownerController from "../controller/OwnerController";
