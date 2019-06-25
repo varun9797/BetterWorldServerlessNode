@@ -87,22 +87,25 @@ custom:
     - dev
     - staging
     - prod
+  prune:
+    automatic: true
+    number: 3
   mysqlHost:
     dev: ${ssm:mySqlHost}
     staging: "sdasda" #get from ssm
-    prod: ${ssm:/myapp/prod/mysql-host} #get from ssm
+    prod: ${ssm:mySqlHost} #get from ssm
   mysqlUser:
     dev: ${ssm:mySqlUser}
     staging: myapp_stag
-    prod: myapp
+    prod: ${ssm:mySqlUser}
   mysqlPassword:
     dev: ${ssm:mySqlPassword} #get from ssm (secure)
     staging: "sdfsdfsdf" #get from ssm (secure)
-    prod: ${ssm:/myapp/prod/mysql-password~true} #get from ssm (secure)
+    prod: ${ssm:mySqlPassword} #get from ssm (secure)
   mysqlDatabase:
     dev: 'dev_society'
     staging: myapp_staging
-    prod: myapp_prod
+    prod: prod_society
   mysqlPort:
     dev: '3306'
     staging: '3306'
@@ -177,8 +180,10 @@ functions:
         method: post
         path: email
 plugins:
+  - serverless-prune-plugin
   - serverless-webpack
   - serverless-offline
+  
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
