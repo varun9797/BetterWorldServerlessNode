@@ -18,6 +18,17 @@ class SocietyModel {
             throw new Error(err);
         }
     } 
+    getSocietyByOwnerId = async (body)=>{
+        try {
+            console.log("SocietyModel:: getSocietyByOwnerId : ");
+            let query = `call get_society(${body.ownerId})`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse[0];
+        } catch(err) {
+            console.log("SocietyModel:: getSocietyByOwnerId Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    } 
 }
 
 export default new SocietyModel();

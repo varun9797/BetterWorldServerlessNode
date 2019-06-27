@@ -87,9 +87,6 @@ custom:
     - dev
     - staging
     - prod
-  prune:
-    automatic: true
-    number: 3
   mysqlHost:
     dev: ${ssm:mySqlHost}
     staging: "sdasda" #get from ssm
@@ -180,7 +177,6 @@ functions:
         method: post
         path: email
 plugins:
-  - serverless-prune-plugin
   - serverless-webpack
   - serverless-offline
   
