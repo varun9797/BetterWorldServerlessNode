@@ -2,6 +2,7 @@ import authenticationModel from "../model/AuthenticationModel";
 import bcrypt from '../../../../lib/bcrypt';
 import jwt from '../../../../lib/jwt';
 import responseFormat from "../../../../lib/response-format";
+import jwt_decode from 'jwt-decode';
 
 
 class AuthenticationController {
@@ -62,6 +63,10 @@ class AuthenticationController {
                     if (!result) {
                         res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Token is invalid", null));
                     } else {
+                        if(req.body){
+                            req.body.senderInfo = this.decodeJwt(token);
+                        }
+                        
                         next()
                     }
             } else {
@@ -72,6 +77,13 @@ class AuthenticationController {
             res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err));
         } 
     }
+
+    decodeJwt (token) {
+        var decoded = jwt_decode(token);
+        console.log(decoded);
+    
+        return decoded;
+    };
 }
 
 export default new AuthenticationController();

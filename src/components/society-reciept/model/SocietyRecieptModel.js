@@ -40,12 +40,34 @@ class SocietyRecieptModel {
 
     updatePendingPayment = async (body)=>{
         try {
-            console.log("SocietyRecieptModel:: updatePendingPayment : ");
-            let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
-            let result = await queryMediator.queryConnection(query);
-            return result.dbResponse[0];
+            if(await this.validateUserForPendingPayment(body)){
+                console.log("SocietyRecieptModel:: updatePendingPayment : ");
+                let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
+                let result = await queryMediator.queryConnection(query);
+                return result.dbResponse[0];
+            } else {
+                throw new Error("You Are not a Society Admin");
+            }
         } catch(err) {
             console.log("SocietyRecieptModel:: updatePendingPayment Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
+    async validateUserForPendingPayment (body){
+        try {
+            console.log("SocietyRecieptModel:: validateUserForPendingPayment : ", JSON.stringify(body));
+            let query = `SELECT count(flatid) AS flatCount FROM flat where (role =2) and ownerid =${body.senderInfo.ownerid} 
+            and societyid =${body.societyId} and ${body.flatid} in (select flatid from flat
+            where societyid =${body.societyId} and ${body.ownerid} in (select ownerid from flat where societyid =${body.societyId}));`;
+            let result = await queryMediator.queryConnection(query);
+            if(result.dbResponse && result.dbResponse[0] && result.dbResponse[0].flatCount>0){
+                return true;
+            } else {
+                return false
+            }
+        } catch(err) {
+            console.log("SocietyRecieptModel:: validateUserForPendingPayment Error : ",JSON.stringify(err));
             throw new Error(err);
         }
     }
