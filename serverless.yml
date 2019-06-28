@@ -37,9 +37,9 @@ provider:
     SECRET_KEY: ${ssm:secretKey}
     EMAIL: "betterworld9797@gmail.com"
     PASSWORD: ${ssm:gmailPwd}
-    GOOGLE_REDIRECT_URL: "https://uedyhinf4i.execute-api.us-east-1.amazonaws.com"
-    GOOGLE_CLIENT_SECRET: "319891365604-u9j56k87jm3hjjoegncaqhard0nc3r7o.apps.googleusercontent.com"
-    GOOGLE_CLIENT_ID: "E_1kGLpihLllRmPeu9mk8-sc"
+    AWS_ACCESS_KEY: ${self:provider.storedAwsAccessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${self:provider.storedAwsSecretKey}
+
 
 
 # you can overwrite defaults here
