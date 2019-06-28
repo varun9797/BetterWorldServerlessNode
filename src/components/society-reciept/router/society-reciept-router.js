@@ -6,11 +6,11 @@ import responseFormat from "../../../../lib/response-format"
 
 
 router.get("/societyReciept", authenticationController.verifyTokenMiddleware, getSocietyReciept);
-router.post("/societyReciept", putOrPostSocietyReciept);
+router.post("/societyReciept",authenticationController.verifyTokenMiddleware, putOrPostSocietyReciept);
 router.put("/societyReciept", authenticationController.verifyTokenMiddleware, putOrPostSocietyReciept);
 router.put("/pendingPayment", authenticationController.verifyTokenMiddleware, updatePendingPayment);
 router.get("/paymentHistory",  authenticationController.verifyTokenMiddleware, getPaymentHistory);
-router.get("/monthlyRecieptUpdateByCron", authenticationController.verifyTokenMiddleware, monthlyRecieptUpdateByCron);
+router.get("/monthlyRecieptUpdateByCron", monthlyRecieptUpdateByCron);
 
 async function getSocietyReciept(req, res) {
     try {

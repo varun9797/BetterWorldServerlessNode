@@ -1,5 +1,6 @@
 import societyRecieptModel from "./../model/SocietyRecieptModel"
 import notification from "./../../utility/Notification"
+import queryMediator from '../../utility/QueryMediator';
 
 var aws = require('aws-sdk');
 var lambda = new aws.Lambda();
@@ -11,22 +12,44 @@ class SocietyRecieptController {
     }
     createOrUpdateReciept = async (body, httpMethod) => {
         try {
-            console.log("SocietyRecieptController :: createOrUpdateReciept");
-            let promiseArr = [];
-            body.flatTypeArr.forEach((flatType)=>{
-                body.flatType = flatType;
-                promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
-            })
-            await Promise.all(promiseArr);
-            //this.notifyOwnersOnNewMonthlyReciept(body); 
-            body.method = "notifyOwnersOnNewMonthlyReciept";   
-            this.invokeLambda(body);
-            await new Promise(resolve => setTimeout(resolve, 50));
-            return;
+            if(await this.validateCreateOrUpdateReciept(body)){
+                console.log("SocietyRecieptController :: createOrUpdateReciept");
+                let promiseArr = [];
+                body.flatTypeArr.forEach((flatType)=>{
+                    body.flatType = flatType;
+                    promiseArr.push(societyRecieptModel.createOrUpdatePaymentStructure(body, httpMethod))
+                })
+                await Promise.all(promiseArr);
+                //this.notifyOwnersOnNewMonthlyReciept(body); 
+                body.method = "notifyOwnersOnNewMonthlyReciept";   
+                this.invokeLambda(body);
+                await new Promise(resolve => setTimeout(resolve, 50));
+                return;
+            } else {
+                throw new Error("invalid input");
+            }
+
         } catch(err) {
             console.log("SocietyRecieptController :: createOrUpdateReciept :: Error", err);
             throw new Error(err);
         } 
+    }
+
+    validateCreateOrUpdateReciept = async (body)=>{
+        try {
+            console.log("SocietyRecieptController :: validateCreateOrUpdateReciept");
+            let query = `SELECT count(flatid) AS flatCount FROM flat where (role =2) and ownerid =${body.senderInfo.ownerid} 
+            and societyid =${body.societyId}`;
+            let result = await queryMediator.queryConnection(query);
+            if(result.dbResponse && result.dbResponse[0] && result.dbResponse[0].flatCount>0){
+                return true;
+            } else {
+                return false
+            }
+        } catch(err){
+            console.log("SocietyRecieptController :: validateCreateOrUpdateReciept :: Error", err);
+            throw new Error(err);
+        }
     }
 
     invokeLambda = async (event) =>{
@@ -35,13 +58,19 @@ class SocietyRecieptController {
             InvocationType: 'RequestResponse',
             Payload: JSON.stringify(event, null, 2)
           };
-          return await lambda.invoke(params, function(err, data) {
-            if (err) {
-                console.log('ambda-node-dev-email :: Error ' +  err);
-            } else {
-              console.log('ambda-node-dev-email inoked ' +  data.Payload);
+
+          return lambda.invoke(params).promise().then((data) => {
+            console.log('ambda-node-dev-email inoked ' ,  data.Payload);
+            if (data.FunctionError) {
+              throw new Error(data.Payload);
             }
-          }).promise();
+            else {
+              return Promise.resolve(JSON.parse(data.Payload));
+            }
+          }).catch((err) => {
+            console.log('lambdaService::invokeGraphQL::error: ', err);
+            return Promise.reject(err);
+          });
     }
 
     notifyOwnersOnNewMonthlyReciept = async (body) => {

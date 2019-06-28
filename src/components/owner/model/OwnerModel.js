@@ -35,8 +35,10 @@ class OwnerModel {
         try {
             if(body.ownerId) {
                 console.log("SocietyModel:: updateOwnerDetails : ");
+                let ownerId = body.senderInfo.ownerid;
+                delete body.senderInfo;
                 //let query = `update owner set ownername = '${body.ownerName}', email= '${body.email}', phonenumber= '${body.phonenumber}', dateOfBirth = '${body.dateOfBirth}', gender =${body.gender} where ownerid=${body.ownerId}`;
-                let query = `UPDATE owner SET ? WHERE ownerid=${body.ownerId}`;
+                let query = `UPDATE owner SET ? WHERE ownerid=${ownerId}`;
                 let result = await queryMediator.queryConnection(query, body);
                 return result.dbResponse;
             } else {

@@ -37,7 +37,7 @@ class OwnerController {
         try {
             console.log("OwnerController :: updateOwnerDetails");
             let body = req.body;
-            body.ownerId = req.params.ownerId;
+            //body.ownerId = req.params.ownerId;
             let result = await ownerModel.updateOwnerDetails(body);
             res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
         } catch(err) {

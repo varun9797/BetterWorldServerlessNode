@@ -1,12 +1,13 @@
 import express from "express";
 var router = express.Router();
 
+import authenticationController from './../../authentication/controller/AuthenticationController';
 import ownerController from "../controller/OwnerController";
 
 
 router.post("/registerOwner", ownerController.registerOwner);
 router.get("/ownerDetails", ownerController.getOwnerDetails);
-router.patch("/:ownerId/ownerDetails",  ownerController.updateOwnerDetails);
+router.patch("/:ownerId/ownerDetails",  authenticationController.verifyTokenMiddleware, ownerController.updateOwnerDetails);
 
 
 
