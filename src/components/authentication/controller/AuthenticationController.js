@@ -1,17 +1,17 @@
-import authenticationModel from "../model/AuthenticationModel";
-import bcrypt from '../../../../lib/bcrypt';
-import jwt from '../../../../lib/jwt';
+const authenticationModel =require( "../model/AuthenticationModel");
+const bcrypt =require ( '../../../../lib/bcrypt');
+const jwt = require( '../../../../lib/jwt');
 import responseFormat from "../../../../lib/response-format";
-import jwt_decode from 'jwt-decode';
+const jwt_decode = require('jwt-decode');
 
 
-class AuthenticationController {
-    constructor(){
-        console.log("inside AuthenticationController");
+// class AuthenticationController {
+//     constructor(){
+//         console.log("inside AuthenticationController");
          
-    }
+//     }
 
-    loginUser = async (req, res) => {
+    export  async  function loginUser (req, res) {
         try {
             let body = req.body;
             console.log("AuthenticationController :: loginUser");
@@ -34,7 +34,7 @@ class AuthenticationController {
         } 
     } 
 
-    verifyTokenApi = async (req, res) => {
+    export  async  function verifyTokenApi (req, res){
         try {
             console.log("AuthenticationController :: verifyToken");
             var token = req.body.token || req.headers["x-access-token"];
@@ -54,7 +54,7 @@ class AuthenticationController {
         } 
     }
 
-    verifyTokenMiddleware = async (req, res, next) => {
+    export  async  function verifyTokenMiddleware  (req, res, next) {
         try {
             console.log("AuthenticationController :: verifyToken");
             var token = req.body.token || req.headers["x-access-token"];
@@ -64,7 +64,7 @@ class AuthenticationController {
                         res.status(responseFormat.statusCode["BAD_REQUEST"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["BAD_REQUEST"], "Token is invalid", null));
                     } else {
                         if(req.body){
-                            req.body.senderInfo = this.decodeJwt(token);
+                            req.body.senderInfo = decodeJwt(token);
                         }
                         
                         next()
@@ -78,12 +78,12 @@ class AuthenticationController {
         } 
     }
 
-    decodeJwt (token) {
+    function decodeJwt (token) {
         var decoded = jwt_decode(token);
         console.log(decoded);
     
         return decoded;
     };
-}
+//}
 
-export default new AuthenticationController();
+//export default new AuthenticationController();

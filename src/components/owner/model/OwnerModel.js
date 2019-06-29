@@ -1,13 +1,13 @@
-import queryMediator from '../../utility/QueryMediator';
+const queryMediator = require( '../../utility/QueryMediator');
 
 
-class OwnerModel {
-    constructor(){
-        console.log("inside OwnerModel");
+// class OwnerModel {
+//     constructor(){
+//         console.log("inside OwnerModel");
          
-    }
+//     }
 
-    registerOwner = async (body)=>{
+    export async function registerOwner (body){
         try {
             console.log("SocietyModel:: registerOwner : ");
             let query = `insert into owner(ownername,type,phonenumber,email, dateOfBirth, gender, password) values ('${body.ownerName}',${body.type}, '${body.phoneNumber}','${body.email}','${body.dateOfBirth}',${body.gender}, '${body.password}')`;
@@ -19,7 +19,7 @@ class OwnerModel {
         }
     } 
 
-    getOwnerDetails = async (body)=>{
+    export async function getOwnerDetails (body){
         try {
             console.log("SocietyModel:: getOwnerDetails : ");
             let query = `call get_owner_details_by_ownerid(${body.ownerId})`;
@@ -31,7 +31,7 @@ class OwnerModel {
         }
     }
 
-    updateOwnerDetails = async (body)=>{
+    export async function  updateOwnerDetails (body){
         try {
             if(body.ownerId) {
                 console.log("SocietyModel:: updateOwnerDetails : ");
@@ -49,6 +49,6 @@ class OwnerModel {
             throw new Error(err);
         }
     }
-}
+//}
 
-export default new OwnerModel();
+//export default new OwnerModel();

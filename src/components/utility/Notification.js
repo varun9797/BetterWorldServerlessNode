@@ -1,5 +1,5 @@
 
-import emailTemplateModel from "./EmailTemplateModel";
+const emailTemplateModel = require("./EmailTemplateModel");
 import nodemailer from "nodemailer";
 import  {
     MESSAGE_TEMPLATE
@@ -8,17 +8,25 @@ import  {
 //     MESSAGE_TEMPLATE
 // } from "config/constants";
 
-class Notification {
-    constructor() {
-        this.transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD
-            }
-        });
-     }
-    dummyMailFunction = async (req, res) => {
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
+});
+
+// class Notification {
+//     constructor() {
+//         this.transporter = nodemailer.createTransport({
+//             service: "gmail",
+//             auth: {
+//                 user: process.env.EMAIL,
+//                 pass: process.env.PASSWORD
+//             }
+//         });
+//      }
+    export async function dummyMailFunction (req, res) {
         console.log("Notification : auctionDeniedNotification ");
         try {
             const paramObj = {
@@ -36,7 +44,7 @@ class Notification {
                 htmlBody: htmlTemplate
             };
             console.log(paramsMailObj);
-            await this.sendEmail(paramsMailObj);
+            await sendEmail(paramsMailObj);
             res.send("mail sent!!");
         } catch (err) {
             console.log("Notification  : auctionDeniedNotification :: error ", err);
@@ -44,7 +52,7 @@ class Notification {
         }
     }
 
-    pendingAmountUpdation = async (reqBody) => {
+    export async function pendingAmountUpdation (reqBody) {
         console.log("Notification : auctionDeniedNotification ");
         try {
             const paramObj = {
@@ -68,7 +76,7 @@ class Notification {
                 htmlBody: htmlTemplate
             };
             console.log(paramsMailObj);
-            await this.sendEmail(paramsMailObj);
+            await sendEmail(paramsMailObj);
             //throw new Error("temp halted")
             //res.send("mail sent!!");
         } catch (err) {
@@ -77,7 +85,7 @@ class Notification {
         }
     }
 
-    newMaintenanceRecipet = async (reqBody) => {
+    export async function newMaintenanceRecipet (reqBody) {
         console.log("Notification : auctionDeniedNotification ");
         try {
             const paramObj = {
@@ -105,7 +113,7 @@ class Notification {
                 htmlBody: htmlTemplate
             };
             console.log(paramsMailObj);
-            await this.sendEmail(paramsMailObj);
+            await sendEmail(paramsMailObj);
             //throw new Error("temp halted")
             //res.send("mail sent!!");
         } catch (err) {
@@ -114,7 +122,7 @@ class Notification {
         }
     }
 
-    sendEmail = async params => {
+    export async function sendEmail (params) {
         console.log("Notification : sendEmail ");
         try {
             params.email =
@@ -122,7 +130,7 @@ class Notification {
             if (!params.cc) {
                 params.cc = null;
             }
-            await this.sendEmailByNodeMailer(
+            await sendEmailByNodeMailer(
                 params.email.join(","),
                 params.subject,
                 params.message,
@@ -135,7 +143,7 @@ class Notification {
         }
     };
 
-    sendEmailByNodeMailer = (receiver, subject, message, html = null, cc = null, bcc = null) => {
+    export async function sendEmailByNodeMailer(receiver, subject, message, html = null, cc = null, bcc = null) {
         console.log("Notification :: sendEmailByNodeMailer " + receiver + " CC:" + cc + " BCC " + bcc);
         return new Promise((resolve, reject) => {
             let mailOptions = {
@@ -151,7 +159,7 @@ class Notification {
             if (bcc) {
                 mailOptions.bcc = bcc.join(",");
             }
-            this.transporter.sendMail(mailOptions, err => {
+            transporter.sendMail(mailOptions, err => {
                 if (err) {
                     console.log(
                         "Notification :: sendEmailByNodeMailer :: error " +
@@ -169,6 +177,6 @@ class Notification {
             });
         });
     };
-}
+// }
 
-export default new Notification();
+// export default new Notification();

@@ -1,10 +1,10 @@
-import queryMediator from '../../utility/QueryMediator';
+const queryMediator = require( '../../utility/QueryMediator');
 
-class FlatModel {
-    constructor(){
-        console.log("inside FlatModel");
+// class FlatModel {
+//     constructor(){
+//         console.log("inside FlatModel");
          
-    }
+//     }
 
     // getFlatsByOwnerId = async (body)=>{
     //     try {
@@ -18,7 +18,7 @@ class FlatModel {
     //     }
     // } 
 
-    getFlats = async (body)=>{
+    export async function getFlats (body){
         try {
             console.log("FlatModel:: getFlatsByOwnerId : ");
             let query;
@@ -53,6 +53,6 @@ class FlatModel {
     //         throw new Error(err);
     //     }
     // } 
-}
+// }
 
-export default new FlatModel();
+// export default new FlatModel();

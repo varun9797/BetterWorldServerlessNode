@@ -1,8 +1,8 @@
-import database from '../../../database/mysql';
+const database = require( '../../../database/mysql');
 
-class QueryMediator {
+//class QueryMediator {
 
-    queryConnection = (query, value = null) => {
+    export async function queryConnection (query, value = null) {
         var appData = {
             'error': 1,
             'data': '',
@@ -39,6 +39,6 @@ class QueryMediator {
         });
     }
 
-}
+//}
 
-export default new QueryMediator();
+//export default new QueryMediator();

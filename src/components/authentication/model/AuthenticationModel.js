@@ -1,12 +1,12 @@
-import queryMediator from '../../utility/QueryMediator';
+const queryMediator = require( '../../utility/QueryMediator');
 
-class AuthenticationModel {
-    constructor(){
-        console.log("inside AuthenticationModel");
+// class AuthenticationModel {
+//     constructor(){
+//         console.log("inside AuthenticationModel");
          
-    }
+//     }
 
-    loginUser = async (body)=>{
+  export async function  loginUser (body){
         try {
             console.log("SocietyModel:: loginUser : ");
             let query = `SELECT ownerid, ownername, phoneNumber, email, gender, password, type, dateOfBirth FROM owner WHERE email = '${body.email}'`;
@@ -17,6 +17,6 @@ class AuthenticationModel {
             throw new Error(err);
         }
     } 
-}
+//}
 
-export default new AuthenticationModel();
+//export default new AuthenticationModel();

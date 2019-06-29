@@ -1,11 +1,11 @@
 import mysql from "mysql";
-import queryMediator from "./QueryMediator";
-import handlebars from "handlebars";
+const queryMediator = require("./QueryMediator");
+const handlebars = require("handlebars");
 
-class EmailTemplateModel {
-    constructor() { }
+// class EmailTemplateModel {
+//     constructor() { }
 
-    getEmailTemplate = (params) => {
+    export async function getEmailTemplate (params) {
         console.log("EmailTemplateModel :: getEmailTemplate ",params);
         // return promise reject || resolve
         return new Promise(async (resolve, reject) => {
@@ -32,6 +32,6 @@ class EmailTemplateModel {
             }
         });
     }
-}
+// }
 
-export default new EmailTemplateModel();
+// export default new EmailTemplateModel();

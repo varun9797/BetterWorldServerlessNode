@@ -11,8 +11,8 @@ var connection = mysql.createPool({
     multipleStatements: true
 });
 
-export default {
-    connection
-  }
+// export default {
+//     connection
+//   }
 
-//module.exports.connection = connection;
+module.exports.connection = connection;

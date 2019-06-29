@@ -1,10 +1,10 @@
-import queryMediator from '../../utility/QueryMediator';
-class SocietyRecieptModel {
-    constructor(){
-        console.log("inside SocietyRecieptModel");
-    }
+const queryMediator = require( '../../utility/QueryMediator');
+// class SocietyRecieptModel {
+//     constructor(){
+//         console.log("inside SocietyRecieptModel");
+//     }
 
-    createOrUpdatePaymentStructure = async (body, httpMethod)=>{
+    export async function createOrUpdatePaymentStructure  (body, httpMethod){
         try {
             console.log("SocietyRecieptModel:: createOrUpdatePaymentStructure : ")
             if(httpMethod == 'POST'){
@@ -26,7 +26,7 @@ class SocietyRecieptModel {
         }
     }
 
-    getPaymentStructure = async (body)=>{
+    export async function getPaymentStructure (body){
         try {
             console.log("SocietyRecieptModel:: getPaymentStructure : ");
             let query = `call get_payment_structure(${body.paymentStructureId})`;
@@ -38,9 +38,9 @@ class SocietyRecieptModel {
         }
     }
 
-    updatePendingPayment = async (body)=>{
+    export async function updatePendingPayment (body){
         try {
-            if(await this.validateUserForPendingPayment(body)){
+            if(await validateUserForPendingPayment(body)){
                 console.log("SocietyRecieptModel:: updatePendingPayment : ");
                 let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
                 let result = await queryMediator.queryConnection(query);
@@ -54,7 +54,7 @@ class SocietyRecieptModel {
         }
     }
 
-    async validateUserForPendingPayment (body){
+    async function validateUserForPendingPayment (body){
         try {
             console.log("SocietyRecieptModel:: validateUserForPendingPayment : ", JSON.stringify(body));
             let query = `SELECT count(flatid) AS flatCount FROM flat where (role =2) and ownerid =${body.senderInfo.ownerid} 
@@ -72,7 +72,7 @@ class SocietyRecieptModel {
         }
     }
 
-    getOwnerDetailByflatId = async (flatid)=>{
+    export async function getOwnerDetailByflatId (flatid){
         try {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");
             let query = `SELECT  o.email, o.ownername, f.maintenanceAmount, f.buildingname, f.pendingpayment, f.flatid, f.flatname, s.societyname FROM  flat f
@@ -88,7 +88,7 @@ class SocietyRecieptModel {
     }
 
 
-    getPaymentHistory = async (body)=>{
+    export async function getPaymentHistory (body){
         try {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");
             let query = `select idpaymenthistory, flatid, amount, createddate, updateddate, ownerid, remainingbalance, updatedby, comment from paymenthistory where flatid = ${body.flatId} order by createddate DESC`;
@@ -100,7 +100,7 @@ class SocietyRecieptModel {
         }
     }
 
-    getDistinctSocietyIdAndFlatType = async ()=>{
+    export async function getDistinctSocietyIdAndFlatType (){
         try {
             console.log("SocietyRecieptModel:: updatePendingPayment : ");
             let query = `select
@@ -114,7 +114,7 @@ class SocietyRecieptModel {
         }
     }
 
-    monthlyRecieptUpdateByCron = async (body)=>{
+    export async function monthlyRecieptUpdateByCron (body){
         try {
             console.log("SocietyRecieptModel:: monthlyRecieptUpdateByCron : ");
             let query = `UPDATE flat f1 
@@ -132,7 +132,7 @@ class SocietyRecieptModel {
     }
     
 
-    getOwnersEmailBySocietyIds = async (societyIds)=>{
+    export async function getOwnersEmailBySocietyIds (societyIds){
         try {
             console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds : ");
             let query = `SELECT  o.email, o.ownername, f.maintenanceAmount, f.buildingname, f.pendingpayment, f.flatid, f.flatname, s.societyname FROM owner o 
@@ -147,7 +147,7 @@ class SocietyRecieptModel {
         }
     }
 
-    getOwnersEmailBySocietyIdAndFlatType = async (body)=>{
+    export async function getOwnersEmailBySocietyIdAndFlatType (body){
         try {
             console.log("SocietyRecieptModel:: getOwnersEmailBySocietyIds : ");
             let query = `SELECT F.flatid, F.flatname, F.buildingname,  S.societyname, P.buildingMaintenance,  P.parkingMaintenance,P.municipalDue, P.sinkingFund, P.electricityCharge, P.createdBy, P.createdDate, P.updatedBy, P.updatedDate , O.email, O.ownername,F.flatid, F.flatType FROM owner O 
@@ -163,6 +163,6 @@ class SocietyRecieptModel {
         }
     }
 
-}
+// }
 
-export default new SocietyRecieptModel();
+// export default new SocietyRecieptModel();

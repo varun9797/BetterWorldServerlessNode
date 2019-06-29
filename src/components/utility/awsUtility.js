@@ -1,7 +1,8 @@
 import AWS from 'aws-sdk';
  const BUCKET_NAME = "betterworldimage";
-// const IAM_USER_KEY = process.env.AWS_ACCESS_KEY;
-// const IAM_USER_SECRET = process.env.AWS_SECRET_ACCESS_KEY;
+
+
+
 AWS.config.update({ region: 'us-east-1' });
 let s3 = new AWS.S3();
 var uploadToS3= function(imageData){

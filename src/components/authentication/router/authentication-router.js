@@ -1,7 +1,7 @@
 import express from "express";
 var router = express.Router();
-import notification from "../../utility/Notification";
-import authenticationController from "../controller/AuthenticationController";
+const notification = require("../../utility/Notification");
+const authenticationController = require("../controller/AuthenticationController");
 
 
 router.post("/loginUser",authenticationController.loginUser);

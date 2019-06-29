@@ -1,18 +1,18 @@
-import societyRecieptModel from "./../model/SocietyRecieptModel"
-import notification from "./../../utility/Notification"
-import queryMediator from '../../utility/QueryMediator';
+const societyRecieptModel = require("./../model/SocietyRecieptModel")
+const notification =  require("./../../utility/Notification")
+const queryMediator = require('../../utility/QueryMediator');
 
 var aws = require('aws-sdk');
 var lambda = new aws.Lambda();
 
-class SocietyRecieptController {
-    constructor(){
-        console.log("inside SocietyRecieptController");
+// class SocietyRecieptController {
+//     constructor(){
+//         console.log("inside SocietyRecieptController");
          
-    }
-    createOrUpdateReciept = async (body, httpMethod) => {
+//     }
+    export async function createOrUpdateReciept (body, httpMethod) {
         try {
-            if(await this.validateCreateOrUpdateReciept(body)){
+            if(await validateCreateOrUpdateReciept(body)){
                 console.log("SocietyRecieptController :: createOrUpdateReciept");
                 let promiseArr = [];
                 body.flatTypeArr.forEach((flatType)=>{
@@ -22,7 +22,7 @@ class SocietyRecieptController {
                 await Promise.all(promiseArr);
                 //this.notifyOwnersOnNewMonthlyReciept(body); 
                 body.method = "notifyOwnersOnNewMonthlyReciept";   
-                this.invokeLambda(body);
+                invokeLambda(body);
                 await new Promise(resolve => setTimeout(resolve, 50));
                 return;
             } else {
@@ -35,7 +35,7 @@ class SocietyRecieptController {
         } 
     }
 
-    validateCreateOrUpdateReciept = async (body)=>{
+    export async function validateCreateOrUpdateReciept (body){
         try {
             console.log("SocietyRecieptController :: validateCreateOrUpdateReciept");
             let query = `SELECT count(flatid) AS flatCount FROM flat where (role =2) and ownerid =${body.senderInfo.ownerid} 
@@ -52,7 +52,7 @@ class SocietyRecieptController {
         }
     }
 
-    invokeLambda = async (event) =>{
+    export async function  invokeLambda (event) {
         let params = {
             FunctionName: 'lambda-node-dev-email',
             InvocationType: 'RequestResponse',
@@ -73,7 +73,7 @@ class SocietyRecieptController {
           });
     }
 
-    notifyOwnersOnNewMonthlyReciept = async (body) => {
+    export async function notifyOwnersOnNewMonthlyReciept (body) {
         try {
             console.log("SocietyRecieptController :: notifyOwnersOnNewMonthlyReciept");
             let result = await societyRecieptModel.getOwnersEmailBySocietyIdAndFlatType(body);
@@ -87,7 +87,7 @@ class SocietyRecieptController {
         } 
     }
 
-    monthlyRecieptUpdateByCron = async () =>{
+    export async function monthlyRecieptUpdateByCron  (){
         try {
             console.log("SocietyRecieptController :: monthlyRecieptUpdateByCron");
             let result = await societyRecieptModel.getDistinctSocietyIdAndFlatType();
@@ -98,7 +98,7 @@ class SocietyRecieptController {
                     await societyRecieptModel.monthlyRecieptUpdateByCron({maintenanceAmount:0,societyId:societyId,flatType:flatType})
                 }
             }
-            this.notifyOwnersOnCronUpdation(societyIdArray);
+            notifyOwnersOnCronUpdation(societyIdArray);
             return result;
         } catch(err) {
             console.log("SocietyRecieptController :: monthlyRecieptUpdateByCron :: Error", err);
@@ -106,7 +106,7 @@ class SocietyRecieptController {
         } 
     }
 
-    getPaymentStructure = async (body) => {
+    export async function getPaymentStructure (body){
         try {
             console.log("SocietyRecieptController :: getPaymentStructure");
             let result = await societyRecieptModel.getPaymentStructure(body);
@@ -116,13 +116,13 @@ class SocietyRecieptController {
             throw new Error(err);
         } 
     }
-    updatePendingPayment = async (body) => {
+    export async function updatePendingPayment (body) {
         try {
             console.log("SocietyRecieptController :: updatePendingPayment");
             let result = await societyRecieptModel.updatePendingPayment(body);
             //this.notifyOwnerOnUpdateOfPendingPayment(body)
             body.method = "notifyOwnerOnUpdateOfPendingPayment"; 
-            this.invokeLambda(body);
+            invokeLambda(body);
             await new Promise(resolve => setTimeout(resolve, 50));
             return result;
         } catch(err) {
@@ -131,7 +131,7 @@ class SocietyRecieptController {
         } 
     } 
 
-    notifyOwnerOnUpdateOfPendingPayment = async (body) => {
+    export async function notifyOwnerOnUpdateOfPendingPayment (body) {
         try {
             console.log("SocietyRecieptController :: notifyOwnerOnUpdateOfPendingPayment");
             let result = await societyRecieptModel.getOwnerDetailByflatId(body.flatid)
@@ -145,7 +145,7 @@ class SocietyRecieptController {
         } 
     }
 
-    getPaymentHistory = async (body) => {
+    export async function getPaymentHistory (body) {
         try {
             console.log("SocietyRecieptController :: getPaymentHistory");
             let result = await societyRecieptModel.getPaymentHistory(body);
@@ -158,7 +158,7 @@ class SocietyRecieptController {
 
     
     
-    notifyOwnersOnCronUpdation = async (societyIds) => {
+    export async function notifyOwnersOnCronUpdation (societyIds) {
         try {
             console.log("SocietyRecieptController :: notifyOwnersOnCronUpdation");
             let result = await societyRecieptModel.getOwnersEmailBySocietyIds(societyIds);
@@ -171,6 +171,6 @@ class SocietyRecieptController {
             throw new Error(err);
         } 
     }
-}
+// }
 
-export default new SocietyRecieptController();
+// export default new SocietyRecieptController();

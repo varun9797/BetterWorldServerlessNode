@@ -1,7 +1,7 @@
 import express from "express";
 var router = express.Router();
 
-import societyController from "../controller/SocietyController";
+const societyController = require("../controller/SocietyController");
 
 
 router.get("/getSocietyInfo",societyController.getSocietyBySocietyId);

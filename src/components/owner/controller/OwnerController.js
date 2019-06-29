@@ -1,14 +1,14 @@
-import ownerModel from "./../model/OwnerModel";
-import bcrypt from "../../../../lib/bcrypt";
+const ownerModel = require("./../model/OwnerModel");
+const bcrypt = require("../../../../lib/bcrypt");
 import responseFormat from "../../../../lib/response-format";
 
-class OwnerController {
-    constructor(){
-        console.log("inside OwnerController");
+// class OwnerController {
+//     constructor(){
+//         console.log("inside OwnerController");
          
-    }
+//     }
 
-    registerOwner = async (req, res) => {
+    export async function  registerOwner (req, res)  {
         try {
             console.log("OwnerController :: registerOwner");
             let body = req.body;
@@ -21,7 +21,7 @@ class OwnerController {
         } 
     } 
 
-    getOwnerDetails = async (req, res) => {
+    export async function getOwnerDetails (req, res) {
         try {
             console.log("OwnerController :: getOwnerDetails");
             let body = req.query;
@@ -33,7 +33,7 @@ class OwnerController {
         } 
     } 
 
-    updateOwnerDetails  = async (req, res) => {
+    export async function updateOwnerDetails  (req, res) {
         try {
             console.log("OwnerController :: updateOwnerDetails");
             let body = req.body;
@@ -45,6 +45,6 @@ class OwnerController {
             res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
         } 
     } 
-}
+//}
 
-export default new OwnerController();
+//export default new OwnerController();

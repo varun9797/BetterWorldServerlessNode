@@ -1,14 +1,14 @@
-import flatModel from "../model/FlatModel"
+const flatModel =require( "../model/FlatModel")
 import responseFormat from "../../../../lib/response-format"
-import awsUtility from "../../utility/awsUtility";
+const awsUtility = require( "../../utility/awsUtility");
 
-class FlatController {
-    constructor(){
-        console.log("inside FlatController");
+// class FlatController {
+//     constructor(){
+//         console.log("inside FlatController");
          
-    }
+//     }
 
-    getFlats = async (req, res) => {
+export async function getFlats(req, res) {
         try {
             let body = req.query;
             console.log("FlatController :: getFlatsByOwnerId");
@@ -20,7 +20,7 @@ class FlatController {
         } 
     } 
 
-    uploadFileOnS3 = async (req, res) => {
+    export async function uploadFileOnS3  (req, res) {
         try {
             console.log("FlatController :: uploadFileOnS3");
             let result = await awsUtility.uploadToS3(req.body.image);
@@ -32,7 +32,7 @@ class FlatController {
         } 
     } 
 
-    getFileFromS3 = async (req, res) => {
+    export async function getFileFromS3 (req, res) {
         try {
             console.log("FlatController :: uploadFileOnS3");
             let result = await awsUtility.getS3Image(req.query);
@@ -73,6 +73,6 @@ class FlatController {
     //     } 
     // } 
 
-}
+// }
 
-export default new FlatController();
+// export default new FlatController();

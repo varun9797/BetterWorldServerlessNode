@@ -1,8 +1,11 @@
 import express from "express";
 var router = express.Router();
 
-import authenticationController from './../../authentication/controller/AuthenticationController';
-import ownerController from "../controller/OwnerController";
+// import authenticationController from './../../authentication/controller/AuthenticationController';
+// import ownerController from "../controller/OwnerController";
+
+const authenticationController = require( './../../authentication/controller/AuthenticationController');
+const ownerController =  require("../controller/OwnerController");
 
 
 router.post("/registerOwner", ownerController.registerOwner);

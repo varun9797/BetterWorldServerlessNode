@@ -1,13 +1,13 @@
-import queryMediator from '../../utility/QueryMediator';
+const queryMediator = require( '../../utility/QueryMediator');
 
 
-class SocietyModel {
-    constructor(){
-        console.log("inside OwnerModel");
+// class SocietyModel {
+//     constructor(){
+//         console.log("inside OwnerModel");
          
-    }
+//     }
 
-    getSocietyBySocietyId = async (body)=>{
+    export async function getSocietyBySocietyId (body){
         try {
             console.log("SocietyModel:: getSocietyBySocietyId : ");
             let query = `select societyid, societyname, updatedDate, address, createdDate, pincode from society where societyid = ${body.societyId}`;
@@ -18,7 +18,7 @@ class SocietyModel {
             throw new Error(err);
         }
     } 
-    getSocietyByOwnerId = async (body)=>{
+    export async function getSocietyByOwnerId(body){
         try {
             console.log("SocietyModel:: getSocietyByOwnerId : ");
             let query = `call get_society(${body.ownerId})`;
@@ -29,6 +29,6 @@ class SocietyModel {
             throw new Error(err);
         }
     } 
-}
+// }
 
-export default new SocietyModel();
+// export default new SocietyModel();

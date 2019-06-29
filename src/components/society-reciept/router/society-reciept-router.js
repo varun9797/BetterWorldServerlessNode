@@ -1,8 +1,8 @@
 import express from 'express';
 var router = express.Router();
-import authenticationController from './../../authentication/controller/AuthenticationController';
-import societyRecieptController from "../controller/SocietyRecieptController";
-import responseFormat from "../../../../lib/response-format"
+const authenticationController = require('./../../authentication/controller/AuthenticationController');
+const societyRecieptController = require( "../controller/SocietyRecieptController");
+import responseFormat from "../../../../lib/response-format";
 
 
 router.get("/societyReciept", authenticationController.verifyTokenMiddleware, getSocietyReciept);

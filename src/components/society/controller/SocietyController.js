@@ -1,13 +1,13 @@
-import SocietyModel from "../model/SocietyModel";
-import responseFormat from "../../../../lib/response-format";
+const SocietyModel = require("../model/SocietyModel");
+import responseFormat from  "../../../../lib/response-format";
 
-class SocietyController {
-    constructor(){
-        console.log("inside SocietyController");
+// class SocietyController {
+//     constructor(){
+//         console.log("inside SocietyController");
          
-    }
+//     }
 
-    getSocietyBySocietyId = async (req, res) => {
+    export async function getSocietyBySocietyId(req, res)  {
         try {
             let body = req.query;
             console.log("SocietyController :: getSocietyBySocietyId");
@@ -21,7 +21,7 @@ class SocietyController {
         } 
     } 
 
-    getSocietyByOwnerId = async (req, res) => {
+    export async function getSocietyByOwnerId (req, res) {
         try {
             let body = req.query;
             console.log("SocietyController :: getSocietyByOwnerId");
@@ -32,6 +32,6 @@ class SocietyController {
             res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!!", err.message));
         } 
     } 
-}
+// }
 
-export default new SocietyController();
+// export default new SocietyController();
