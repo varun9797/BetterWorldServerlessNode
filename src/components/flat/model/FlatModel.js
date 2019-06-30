@@ -1,4 +1,5 @@
 import queryMediator from '../../utility/QueryMediator';
+import mysql from "mysql";
 
 class FlatModel {
     constructor(){
@@ -38,6 +39,41 @@ class FlatModel {
             throw new Error(err);
         }
     } 
+
+    updateFlatDetails = async (body)=>{
+        try {
+            console.log("FlatModel:: updateFlatDetails : ");
+            let obj = {
+                status : body.status,
+            }
+            let query = `UPDATE flat SET ? WHERE flatId=${body.flatId}`;
+            
+            let result = await queryMediator.queryConnection(query, obj);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("FlatModel:: updateFlatDetails Error : ",err);
+            throw new Error(err);
+        }
+    }
+    
+    insertFlatImages = async (body)=>{
+        try {
+            console.log("FlatModel:: insertFlatImages : ");
+            let obj = {
+                flatid:body.flatId,
+                filelocation:mysql.escape(body.Location),
+                Key:mysql.escape(body.Key),
+                Bucket:mysql.escape(body.Bucket)
+            }
+            let query = "INSERT INTO flat (flatid, filelocation, Key, Bucket) VALUES ?";
+            
+            let result = await queryMediator.queryConnection(query, obj);
+            return result.dbResponse[0];
+        } catch(err) {
+            console.log("FlatModel:: insertFlatImages Error : ",err);
+            throw new Error(err);
+        }
+    }
 
     // getFlatsBySocietyId = async (body)=>{
     //     try {
