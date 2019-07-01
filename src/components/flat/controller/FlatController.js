@@ -55,6 +55,7 @@ class FlatController {
 
             req.body.fileDetailArray.forEach((data)=>{
                 let base64String = data.base64ImageData.split(',').pop();
+                data.fileName = "Owner-"+req.body.senderInfo.ownerid+"-Flat-"+flatId+"-"+data.fileName
                 let result = awsUtility.uploadToS3(base64String, data.fileName);
                 s3ResponsePromiseArray.push(result);
             })
@@ -83,8 +84,8 @@ class FlatController {
     getFileFromS3 = async (req, res) => {
         try {
             console.log("FlatController :: uploadFileOnS3");
-            let result = await awsUtility.getS3Image(req.query, res);
-            console.log(result);
+            let result = await awsUtility.getS3Image(req.query);
+            //console.log(result);
             var base64data = new Buffer(result.Body).toString('base64');
             res.send(base64data);  
         } catch(err) {

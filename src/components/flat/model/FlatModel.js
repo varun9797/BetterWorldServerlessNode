@@ -59,36 +59,17 @@ class FlatModel {
     insertFlatImages = async (body)=>{
         try {
             console.log("FlatModel:: insertFlatImages : ");
-            let obj = {
-                flatid:body.flatId,
-                filelocation:mysql.escape(body.Location),
-                Key:mysql.escape(body.Key),
-                Bucket:mysql.escape(body.Bucket)
-            }
-            let query = "INSERT INTO flat (flatid, filelocation, Key, Bucket) VALUES ?";
+            let query = `INSERT INTO flatImages (flatid, filelocation, filekey, Bucket)
+             VALUES (${body.flatId},${mysql.escape(body.Location)},${mysql.escape(body.key)},
+             ${mysql.escape(body.Bucket)})`;
             
-            let result = await queryMediator.queryConnection(query, obj);
-            return result.dbResponse[0];
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
         } catch(err) {
             console.log("FlatModel:: insertFlatImages Error : ",err);
             throw new Error(err);
         }
     }
-
-    // getFlatsBySocietyId = async (body)=>{
-    //     try {
-    //         console.log("FlatModel:: getFlatsBySocietyId : ");
-    //         let query = `call get_flats_details(${null}, ${body.societyId})`;
-    //         // let query = `SELECT flatid, flatname, buildingname, societyid, tenantid, pendingpayment, 
-    //         // createdDate, updatedDate, createdBy, updatedBy, maintenanceAmount, role, 
-    //         // FlatType, paymentStructureId, ownerid from flat where societyid =${body.societyId} `;
-    //         let result = await queryMediator.queryConnection(query);
-    //         return result.dbResponse[0];
-    //     } catch(err) {
-    //         console.log("FlatModel:: getFlatsBySocietyId Error : ",err);
-    //         throw new Error(err);
-    //     }
-    // } 
 }
 
 export default new FlatModel();

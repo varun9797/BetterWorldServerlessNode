@@ -9,7 +9,7 @@ class QueryMediator {
             'satusCode': '',
             'dbResponse': []
         };
-        console.log(query , 'values =', value);
+        //console.log(query , 'values =', value);
         return new Promise((resolve, reject) => {
             database.connection.getConnection((err, connection) => {
                 if (err) {
@@ -19,7 +19,8 @@ class QueryMediator {
                     appData['satusCode'] = 500;
                     reject(appData);
                 } else {
-                    connection.query(query, [value], function (err, rows) {
+                    let temp =   connection.query(query, value, function (err, rows) {
+                        console.log("Query = ",temp.sql);
                         connection.release();
                         if (!err) {
                             appData.error = 0;
@@ -28,6 +29,7 @@ class QueryMediator {
                             appData['dbResponse'] = rows;                            
                             resolve(appData);
                         } else {
+                            console.log("QueryMediator :: queryConnection :: Error",err)
                             appData.error = err;
                             appData['data'] = 'Error Occured!';
                             appData['satusCode'] = 400;
