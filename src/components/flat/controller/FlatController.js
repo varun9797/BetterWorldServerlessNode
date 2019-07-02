@@ -32,14 +32,14 @@ class FlatController {
         } 
     }
 
-    insertFlatImages = async (data) => {
+    insertFlatFiles = async (data) => {
         try {
-            console.log("FlatController :: insertFlatImages");
-            let result = await flatModel.insertFlatImages(data);
+            console.log("FlatController :: insertFlatFiles");
+            let result = await flatModel.insertFlatFiles(data);
             return result;
            // res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
         } catch(err) {
-            console.log("FlatController :: insertFlatImages :: Error", err);
+            console.log("FlatController :: insertFlatFiles :: Error", err);
             throw new Error(err)
             //res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
         } 
@@ -64,7 +64,7 @@ class FlatController {
             console.log("******s3ResponseArr******",s3ResponseArr);
             s3ResponseArr.forEach((data)=>{
                 data.flatId = flatId;
-                let result = this.insertFlatImages(data);
+                let result = this.insertFlatFiles(data);
                 dbResponsePromiseArray.push(result);
             })
             let dbResponseArr = await Promise.all(dbResponsePromiseArray);
