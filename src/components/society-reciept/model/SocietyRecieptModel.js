@@ -42,7 +42,7 @@ class SocietyRecieptModel {
         try {
             if(await this.validateUserForPendingPayment(body)){
                 console.log("SocietyRecieptModel:: updatePendingPayment : ");
-                let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid})`;
+                let query = `call update_pending_payment(${body.flatid}, ${body.pendingPayment}, ${body.ownerid}, ${body.senderInfo.ownerid})`;
                 let result = await queryMediator.queryConnection(query);
                 return result.dbResponse[0];
             } else {
