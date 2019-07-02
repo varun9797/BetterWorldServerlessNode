@@ -163,6 +163,19 @@ class SocietyRecieptModel {
         }
     }
 
+    getSocietyRecieptBySocietyId = async (societyId)=>{
+        try {
+            console.log("SocietyRecieptModel:: getSocietyRecieptBySocietyId : ");
+            let query = `select buildingMaintenance, parkingMaintenance, municipalDue, sinkingFund, electricityCharge, createdDate, updatedDate
+            updatedBy, createdBy,flatType from paymentstructure where societyId=${societyId} and isActive =1 `;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err) {
+            console.log("SocietyRecieptModel:: getSocietyRecieptBySocietyId Error : ",JSON.stringify(err));
+            throw new Error(err);
+        }
+    }
+
 }
 
 export default new SocietyRecieptModel();

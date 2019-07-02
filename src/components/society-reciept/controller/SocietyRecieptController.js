@@ -1,6 +1,7 @@
 import societyRecieptModel from "./../model/SocietyRecieptModel"
 import notification from "./../../utility/Notification"
 import queryMediator from '../../utility/QueryMediator';
+import responseFormat from "../../../../lib/response-format"
 
 var aws = require('aws-sdk');
 var lambda = new aws.Lambda();
@@ -169,6 +170,17 @@ class SocietyRecieptController {
         } catch(err) {
             console.log("SocietyRecieptController :: notifyOwnersOnCronUpdation :: Error", err);
             throw new Error(err);
+        } 
+    }
+
+    getSocietyRecieptBySocietyId = async (req, res)=>{
+        try {
+            console.log("SocietyRecieptController :: getSocietyRecieptBySocietyId");
+            let result = await societyRecieptModel.getSocietyRecieptBySocietyId(req.query.societyId);
+            res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", result));
+        } catch(err) {
+            console.log("SocietyRecieptController :: getSocietyRecieptBySocietyId :: Error", err);
+            res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
         } 
     }
 }

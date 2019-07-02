@@ -11,6 +11,7 @@ router.put("/societyReciept", authenticationController.verifyTokenMiddleware, pu
 router.put("/pendingPayment", authenticationController.verifyTokenMiddleware, updatePendingPayment);
 router.get("/paymentHistory",  authenticationController.verifyTokenMiddleware, getPaymentHistory);
 router.get("/monthlyRecieptUpdateByCron", monthlyRecieptUpdateByCron);
+router.get("/societyRecieptBySocietyId", societyRecieptController.getSocietyRecieptBySocietyId);
 
 async function getSocietyReciept(req, res) {
     try {
