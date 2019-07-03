@@ -14,7 +14,7 @@ class SocietyRecieptModel {
                 return result;
             } else if(httpMethod == 'PUT' && body.paymentStructureId){
                 let query = `call update_payment_structure(${body.paymentStructureId}, ${body.societyId}, ${body.flatType},${body.senderInfo.ownerid},${body.buildingMaintenance}, ${body.parkingMaintenance}, ${body.municipalDue},
-                    ${body.sinkingFund}, ${body.electricityCharge})`
+                    ${body.sinkingFund}, ${body.electricityCharge}, ${body.isActive})`
                   let result = await queryMediator.queryConnection(query);
                 return result;
             } else {
@@ -166,7 +166,7 @@ class SocietyRecieptModel {
     getSocietyRecieptBySocietyId = async (societyId)=>{
         try {
             console.log("SocietyRecieptModel:: getSocietyRecieptBySocietyId : ");
-            let query = `select buildingMaintenance, parkingMaintenance, municipalDue, sinkingFund, electricityCharge, createdDate, updatedDate
+            let query = `select id, buildingMaintenance, parkingMaintenance, municipalDue, sinkingFund, electricityCharge, createdDate, updatedDate
             updatedBy, createdBy,flatType from paymentstructure where societyId=${societyId} and isActive =1 `;
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
