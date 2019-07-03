@@ -56,17 +56,17 @@ class FlatModel {
         }
     }
     
-    insertFlatImages = async (body)=>{
+    insertFlatFiles = async (body)=>{
         try {
-            console.log("FlatModel:: insertFlatImages : ");
-            let query = `INSERT INTO flatImages (flatid, filelocation, filekey, Bucket)
+            console.log("FlatModel:: insertFlatFiles : ");
+            let query = `INSERT INTO flatFiles (flatid, filelocation, filekey, Bucket)
              VALUES (${body.flatId},${mysql.escape(body.Location)},${mysql.escape(body.key)},
              ${mysql.escape(body.Bucket)})`;
             
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
         } catch(err) {
-            console.log("FlatModel:: insertFlatImages Error : ",err);
+            console.log("FlatModel:: insertFlatFiles Error : ",err);
             throw new Error(err);
         }
     }
