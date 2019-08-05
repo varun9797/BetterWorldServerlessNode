@@ -50,7 +50,30 @@ var getS3Image = function (body) {
 
 }
 
+var getS3SignedUrl = function (body) {
+    return new Promise((resolve, rejects) => {
+        var params = { Bucket: BUCKET_NAME, Key: `user/flat/${body.uniqueFolder}/${body.fileName}`, ACL: 'bucket-owner-full-control', ContentType:body.contentType };
+        let fileurls =[];
+        let type = 'putObject';
+        if(body.type = 'get'){
+            type = 'getObject'
+        }
+        console.log("params are", params);
+        s3.getSignedUrl('putObject', params, function (err, url){
+            if(err){
+             console.log('Error getting presigned url from AWS S3');
+             rejects({  message : 'Pre-Signed URL error '+  err});
+             }
+             else{
+             fileurls[0] = url;
+             console.log('Presigned URL: ', fileurls[0]);
+             resolve( {urls : fileurls})
+             }
+            });
+    })
+
+}
 
 export default {
-    uploadToS3, getS3Image
+    uploadToS3, getS3Image, getS3SignedUrl
 }

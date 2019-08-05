@@ -8,7 +8,7 @@ import flatController from "../controller/FlatController";
 // router.get("/ownerFlats", authenticationController.verifyTokenMiddleware, flatController.getFlatsByOwnerId);
 // router.get("/societyFlats", authenticationController.verifyTokenMiddleware, flatController.getFlatsBySocietyId);
 router.get("/getFlats", flatController.getFlats);
-router.post("/uploadFiles", authenticationController.verifyTokenMiddleware,flatController.uploadFileOnS3);
+router.post("/s3SignedUrl", authenticationController.verifyTokenMiddleware,flatController.getS3SignedUrl);
 router.get("/getFile", flatController.getFileFromS3);
 router.put("/updateFlat", flatController.updateFlat);
 
