@@ -52,7 +52,7 @@ var getS3Image = function (body) {
 
 var getS3SignedUrl = function (body) {
     return new Promise((resolve, rejects) => {
-        var params = { Bucket: BUCKET_NAME, Key: `user/flat/${body.uniqueFolder}/${body.fileName}`, ACL: 'bucket-owner-full-control', ContentType:body.contentType };
+        var params = { Bucket: BUCKET_NAME, Key: body.s3Key , ContentType:body.contentType };
         let fileurls =[];
         let type = 'putObject';
         if(body.type = 'get'){

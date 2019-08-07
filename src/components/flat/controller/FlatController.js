@@ -48,6 +48,9 @@ class FlatController {
     getS3SignedUrl = async (req, res) => {
         try {
             console.log("FlatController :: getS3SignedUrl");
+            req.body.s3Key = `user/flat/${req.body.uniqueFolder}/${req.body.fileName}`;
+            req.body.bucket = "betterworldimage";
+            await this.insertFlatFiles(req.body);
             let signedUrlResponse = await awsUtility.getS3SignedUrl(req.body);
             res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", signedUrlResponse));
         } catch(err) {

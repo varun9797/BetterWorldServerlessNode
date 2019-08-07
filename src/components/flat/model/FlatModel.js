@@ -59,9 +59,9 @@ class FlatModel {
     insertFlatFiles = async (body)=>{
         try {
             console.log("FlatModel:: insertFlatFiles : ");
-            let query = `INSERT INTO flatFiles (flatid, filelocation, filekey, Bucket)
-             VALUES (${body.flatId},${mysql.escape(body.Location)},${mysql.escape(body.key)},
-             ${mysql.escape(body.Bucket)})`;
+            let query = `INSERT INTO flatFiles (flatid, filekey, Bucket)
+             VALUES (${body.uniqueFolder}, ${mysql.escape(body.s3Key)},
+             ${mysql.escape(body.bucket)})`;
             
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
