@@ -45,6 +45,33 @@ class FlatController {
         } 
     }
 
+    getFlatFilesKey = async (req, res) => {
+        try {
+            console.log("FlatController :: insertFlatFiles");
+            if(req.query.flatId) {
+                let result = await flatModel.getFlatFilesKey(req.query);
+                let fileInfoArr = [];
+                let s3Result;
+                for (let fileObj of result){
+                    let obj = {
+                        type:'get',
+                        s3Key:fileObj.filekey,
+                        contentType:fileObj.contentType
+                    }
+                    fileInfoArr.push(awsUtility.getS3SignedUrl(obj));
+                }
+                s3Result = await  Promise.all(fileInfoArr)
+                res.status(responseFormat.statusCode["SUCCESS"]).json(responseFormat.getExpressResponseObject("success", responseFormat.statusCode["SUCCESS"], "function executed successfully!", s3Result));
+          
+            } else {
+                throw new Error("Please provide flatid");
+            }
+             } catch(err) {
+            console.log("FlatController :: getFlatFilesKey :: Error", err);
+            res.status(responseFormat.statusCode["INTERNAL_SERVER_ERROR"]).json(responseFormat.getExpressResponseObject("error", responseFormat.statusCode["INTERNAL_SERVER_ERROR"], "Something went wrong!", err.message));
+        } 
+    }
+
     getS3SignedUrl = async (req, res) => {
         try {
             console.log("FlatController :: getS3SignedUrl");

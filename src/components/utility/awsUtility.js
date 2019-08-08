@@ -52,14 +52,15 @@ var getS3Image = function (body) {
 
 var getS3SignedUrl = function (body) {
     return new Promise((resolve, rejects) => {
-        var params = { Bucket: BUCKET_NAME, Key: body.s3Key , ContentType:body.contentType };
+        let params = { Bucket: BUCKET_NAME, Key: body.s3Key , ContentType:body.contentType };
         let fileurls =[];
         let type = 'putObject';
-        if(body.type = 'get'){
+        if(body.type == 'get'){
             type = 'getObject'
+            delete params.ContentType;
         }
         console.log("params are", params);
-        s3.getSignedUrl('putObject', params, function (err, url){
+        s3.getSignedUrl(type, params, function (err, url){
             if(err){
              console.log('Error getting presigned url from AWS S3');
              rejects({  message : 'Pre-Signed URL error '+  err});

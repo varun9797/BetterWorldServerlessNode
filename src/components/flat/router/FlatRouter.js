@@ -11,5 +11,5 @@ router.get("/getFlats", flatController.getFlats);
 router.post("/s3SignedUrl", authenticationController.verifyTokenMiddleware,flatController.getS3SignedUrl);
 router.get("/getFile", flatController.getFileFromS3);
 router.put("/updateFlat", flatController.updateFlat);
-
+router.get("/flatFileKey", flatController.getFlatFilesKey);
   export default router;

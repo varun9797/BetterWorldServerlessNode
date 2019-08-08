@@ -59,13 +59,25 @@ class FlatModel {
     insertFlatFiles = async (body)=>{
         try {
             console.log("FlatModel:: insertFlatFiles : ");
-            let query = `INSERT INTO flatFiles (flatid, filekey, Bucket)
+            let query = `INSERT INTO flatFiles (flatid, filekey, Bucket, contentType)
              VALUES (${body.uniqueFolder}, ${mysql.escape(body.s3Key)},
-             ${mysql.escape(body.bucket)})`;
+             ${mysql.escape(body.bucket)}, ${mysql.escape(body.contentType)})`;
             
             let result = await queryMediator.queryConnection(query);
             return result.dbResponse;
         } catch(err) {
+            console.log("FlatModel:: insertFlatFiles Error : ",err);
+            throw new Error(err);
+        }
+    }
+
+    getFlatFilesKey = async (body) => {
+        try {
+            console.log("FlatModel:: getFlatFilesKey : ");
+            let query = `select id, filekey, bucket, status, contentType from flatFiles where flatid = ${body.flatId}`;
+            let result = await queryMediator.queryConnection(query);
+            return result.dbResponse;
+        } catch(err){
             console.log("FlatModel:: insertFlatFiles Error : ",err);
             throw new Error(err);
         }
