@@ -52,12 +52,14 @@ var getS3Image = function (body) {
 
 var getS3SignedUrl = function (body) {
     return new Promise((resolve, rejects) => {
-        let params = { Bucket: BUCKET_NAME, Key: body.s3Key , ContentType:body.contentType };
+        let params = { Bucket: BUCKET_NAME, Key: body.s3Key , ContentType:body.contentType,
+            ACL: 'bucket-owner-full-control', Expires: 60 * 60  };
         let fileurls =[];
         let type = 'putObject';
         if(body.type == 'get'){
             type = 'getObject'
             delete params.ContentType;
+            delete params.ACL;
         }
         console.log("params are", params);
         s3.getSignedUrl(type, params, function (err, url){
