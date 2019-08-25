@@ -57,11 +57,10 @@ class SocietyRecieptModel {
     async validateUserForPendingPayment (body){
         try {
             console.log("SocietyRecieptModel:: validateUserForPendingPayment : ", JSON.stringify(body));
-            let query = `SELECT count(flatid) AS flatCount FROM flat where (role =2) and ownerid =${body.senderInfo.ownerid} 
-            and societyid =${body.societyId} and ${body.flatid} in (select flatid from flat
-            where societyid =${body.societyId} and ${body.ownerid} in (select ownerid from flat where societyid =${body.societyId}));`;
+            let query = `SELECT count(societyid) AS societyCount FROM ownerrole where (role =2 or role =1) and ownerid =${body.senderInfo.ownerid} 
+            and societyid =${body.societyId}`;
             let result = await queryMediator.queryConnection(query);
-            if(result.dbResponse && result.dbResponse[0] && result.dbResponse[0].flatCount>0){
+            if(result.dbResponse && result.dbResponse[0] && result.dbResponse[0].societyCount>0){
                 return true;
             } else {
                 return false
